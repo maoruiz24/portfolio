@@ -16,7 +16,7 @@ export const experiences: Experience[] = [
         bullets: [
             "Orchestrated the migration of legacy mobile enterprise apps to React Native and .NET Core 7.0, achieving seamless delivery on Android and iOS.",
             "Engineered performance critical updates for core SaaS platforms, resulting in a measurable 35% increase in system responsiveness.",
-            "Maintained and modularized complex ASP.NET MVC and SQL Server applications, focus on troubleshooting and feature expansion.",
+            "Maintained and modularized complex ASP.NET MVC and SQL Server applications with a focus on troubleshooting and feature expansion.",
             "Modernized development lifecycles by implementing source control and task management via Azure DevOps, significantly reducing delivery times."
         ],
         impact: "Boosted system performance by 35% and modernized mobile delivery to multi-platform React Native."
@@ -29,7 +29,7 @@ export const experiences: Experience[] = [
         bullets: [
             "Led the redesign of the flagship self-service platform (web + mobile), scaling to 10,000+ concurrent users with Node.js and MongoDB.",
             "Architected and delivered the ETB CRM using C# MVC and MongoDB over a 2-year lifecycle, reducing staff training time and increasing sales by 30%.",
-            "Deploying high-availability microservices on Kubernetes (Azure), integrating cloud storage (Azure Blob) and cross-service authentication.",
+            "Deployed high-availability microservices on Kubernetes (Azure), integrating cloud storage (Azure Blob) and cross-service authentication.",
             "Championed the shift to modern DevOps practices and documentation, improving team effectiveness by 50%."
         ],
         impact: "Delivered a high-scale CRM and self-service ecosystem serving thousands of users with 30% sales lift."

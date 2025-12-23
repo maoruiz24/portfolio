@@ -23,10 +23,10 @@ export default function AboutPage() {
                             I'm Ivan Ruiz, a Senior Full-Stack Engineer based in Mississauga, Ontario. My career has been defined by a passion for solving complex architectural puzzles and delivering high-performance applications that serve thousands of users.
                         </p>
                         <p>
-                            Throughout my journey, I've developed a preference for **measurable outcomes**. Whether it's reducing server costs through efficient cloud-native patterns or improving user satisfaction by 25% through a platform redesign, I believe engineering should always be tied to impact.
+                            Throughout my journey, I've developed a preference for <strong className="text-foreground">measurable outcomes</strong>. Whether it's reducing server costs through efficient cloud-native patterns or improving user satisfaction by 25% through a platform redesign, I believe engineering should always be tied to impact.
                         </p>
                         <p>
-                            Currently, I am deeply focused on **multi-tenant SaaS architectures** and the integration of AI modules to drive operational efficiency. I enjoy the challenge of building isolated, secure, and cost-aware systems that can scale from an initial prototype to a robust enterprise solution.
+                            Currently, I am deeply focused on <strong className="text-foreground">multi-tenant SaaS architectures</strong> and the integration of AI modules to drive operational efficiency. I enjoy the challenge of building isolated, secure, and cost-aware systems that can scale from an initial prototype to a robust enterprise solution.
                         </p>
                     </div>
 
@@ -57,7 +57,7 @@ export default function AboutPage() {
                                 <Heart className="h-6 w-6 text-primary" />
                             </div>
                             <h4 className="font-bold text-xl">Lifelong Learner</h4>
-                            <p className="text-muted-foreground">From homelab experiments to cloud-native certifications, I stay at the forefront of modern engineering.</p>
+                            <p className="text-muted-foreground">From homelab experiments to continuous learning and cloud-native engineering, I stay at the forefront of modern engineering.</p>
                         </div>
                     </div>
                 </div>

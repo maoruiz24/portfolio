@@ -44,7 +44,7 @@ export default function Home() {
                 <Layers className="h-4 w-4 text-primary" /> Cloud Native
               </div>
               <div className="flex items-center gap-2 px-4 py-2 bg-muted/50 rounded-lg text-sm font-medium">
-                <Zap className="h-4 w-4 text-primary" /> Perf Focused
+                <Zap className="h-4 w-4 text-primary" /> Performance-Focused
               </div>
             </div>
           </div>
@@ -85,7 +85,7 @@ export default function Home() {
                   <p className="text-sm text-muted-foreground">Homelab-to-cloud transition strategy using Kubernetes and MinIO.</p>
                 </div>
                 <div className="p-4 rounded-xl bg-background border border-border/50">
-                  <h4 className="font-bold mb-1">AI Module RAG</h4>
+                  <h4 className="font-bold mb-1">AI Module (RAG)</h4>
                   <p className="text-sm text-muted-foreground">Operational automation using vector embeddings and LLM assistants.</p>
                 </div>
                 <div className="p-4 rounded-xl bg-background border border-border/50">
@@ -107,7 +107,7 @@ export default function Home() {
                 <div className="h-2 w-20 bg-primary rounded-full" />
                 <p className="text-sm font-mono text-primary/80 tracking-widest">ARCHITECTURE SNAPSHOT</p>
                 <div className="space-y-2">
-                  <div className="h-8 w-full bg-primary/20 rounded flex items-center px-3 text-[10px] font-mono">NEXT.js 15 APP ROUTER</div>
+                  <div className="h-8 w-full bg-primary/20 rounded flex items-center px-3 text-[10px] font-mono">Next.js 15 App Router</div>
                   <div className="h-8 w-full bg-primary/15 rounded flex items-center px-3 text-[10px] font-mono">API GATEWAY + IAM</div>
                   <div className="h-8 w-full bg-primary/10 rounded flex items-center px-3 text-[10px] font-mono">TENANT-SCOPED SERVICES</div>
                   <div className="h-8 w-full bg-primary/5 rounded flex items-center px-3 text-[10px] font-mono">PRISMA + PG MULTI-SCHEMA</div>

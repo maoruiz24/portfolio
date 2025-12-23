@@ -60,7 +60,7 @@ export default function Hero() {
                         <Link href="/contact">Contact Me</Link>
                     </Button>
                     <Button asChild variant="ghost" size="lg" className="h-12 px-8 text-lg font-medium">
-                        <a href="/resume.pdf" target="_blank">Download Resume</a>
+                        <a href="/Resume-IvanRuiz.pdf" target="_blank">Download Resume</a>
                     </Button>
                 </motion.div>
 

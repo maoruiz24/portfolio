@@ -12,7 +12,7 @@ export default function Footer() {
                     <div className="md:col-span-2 space-y-4">
                         <h3 className="text-xl font-bold tracking-tight">{siteConfig.name}</h3>
                         <p className="text-muted-foreground max-w-sm">
-                            Senior Full-Stack Engineer specializing in scalable SaaS, high-performance web systems, and cloud architecture.
+                            Senior Full-Stack AI Engineer specializing in scalable SaaS, high-performance web systems, and cloud architecture.
                         </p>
                     </div>
                     <div>

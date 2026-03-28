@@ -1,12 +1,12 @@
 export const siteConfig = {
   name: "Ivan Ruiz",
   title: "Senior Full-Stack Engineer",
-  email: "me@iruiz.dev",
+  email: "maoruiz24@hotmail.com",
   location: "Mississauga, ON, Canada",
   links: {
     linkedin: "https://linkedin.com/in/maoruiz24",
     github: "https://github.com/maoruiz24",
-    email: "mailto:me@iruiz.dev",
+    email: "mailto:maoruiz24@hotmail.com",
   },
   seo: {
     description: "Senior Full-Stack Engineer specializing in scalable multi-tenant SaaS, performance optimization, and modern web/mobile delivery with React, Next.js, .NET, and Node.js.",

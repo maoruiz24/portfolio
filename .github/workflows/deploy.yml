@@ -1,0 +1,55 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  IMAGE: ${{ secrets.REGISTRY_URL }}/portfolio
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Login al registry privado
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ secrets.REGISTRY_URL }}
+          username: ${{ secrets.REGISTRY_USER }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+
+      - name: Build y push de la imagen
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: |
+            ${{ env.IMAGE }}:latest
+            ${{ env.IMAGE }}:${{ github.sha }}
+
+      - name: Configurar kubectl
+        uses: azure/setup-kubectl@v3
+
+      - name: Setear kubeconfig
+        run: |
+          mkdir -p ~/.kube
+          echo "${{ secrets.KUBECONFIG_BASE64 }}" | base64 -d > ~/.kube/config
+          chmod 600 ~/.kube/config
+
+      - name: Deploy al cluster
+        run: |
+          kubectl set image deployment/app-portfolio \
+            app-portfolio=${{ env.IMAGE }}:${{ github.sha }} \
+            -n portfolio
+
+          kubectl rollout status deployment/app-portfolio \
+            -n portfolio \
+            --timeout=120s
+
+      - name: Verificar deploy
+        run: kubectl get pods -n portfolio

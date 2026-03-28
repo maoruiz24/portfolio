@@ -26,7 +26,7 @@ export default function Home() {
       <section id="about" className="container mx-auto px-4 md:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <SectionHeading
-            title="Senior Full-Stack Engineer with a product mindset."
+            title="Senior Full-Stack AI Engineer with a product mindset."
             subtitle="I specialize in building end-to-end systems that don't just work—they scale. My approach combines technical rigor with a focus on business impact and user experience."
           />
           <div className="space-y-6 text-lg text-muted-foreground">

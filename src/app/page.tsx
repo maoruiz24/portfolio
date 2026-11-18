@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Bot, Boxes, Brain, ShieldCheck } from "lucide-react";
+import { ArrowRight, Bot, Boxes, Server, Smartphone } from "lucide-react";
 import Hero from "@/components/Hero";
 import Reveal from "@/components/Reveal";
 import SectionHeading from "@/components/SectionHeading";
@@ -10,43 +10,34 @@ import SkillsGrid from "@/components/SkillsGrid";
 import CopyEmailButton from "@/components/CopyEmailButton";
 import { Button } from "@/components/ui/button";
 import { experiences } from "@/lib/data/experience";
-import { projects } from "@/lib/data/projects";
+import { homeProjectSlugs, projects } from "@/lib/data/projects";
 import { siteConfig } from "@/lib/site";
 
 const pillars = [
     {
-        icon: Brain,
-        title: "AI engineering",
-        body: "LLM features that survive production: structured outputs validated by schemas, RAG over pgvector, multi-provider fallback with circuit breakers, LLM-as-judge review and human approval gates.",
-    },
-    {
-        icon: Bot,
-        title: "Agentic development",
-        body: "Custom subagents, skills, slash commands and MCP servers that turn Claude Code into a disciplined engineering team: spec-driven, test-backed and independently reviewed.",
+        icon: Server,
+        title: "Backend architecture",
+        body: ".NET, Node.js and SQL Server systems designed for change: Clean Architecture, CQRS, independently deployable APIs, tested endpoints and incremental modernization of legacy code.",
     },
     {
         icon: Boxes,
-        title: "Product engineering",
-        body: "17 years delivering web, mobile and backend systems end to end — .NET, React, React Native, Node, SQL — for logistics, telecom and enterprise clients.",
+        title: "Enterprise SaaS",
+        body: "Multi-tenant logistics software serving ~200 business customers — performance tuning, data integrity, safe migrations and continuous delivery on a live product.",
     },
     {
-        icon: ShieldCheck,
-        title: "Reliability by design",
-        body: "Offline-first sync, transactional data fixes with rollbacks, contract-preserving migrations and self-hosted Kubernetes. I ship things that keep working.",
+        icon: Smartphone,
+        title: "Mobile engineering",
+        body: "A React Native driver app built from the ground up and published on both stores: offline-first sync, background GPS, barcode scanning and proof of delivery.",
     },
-];
-
-const homeProjectSlugs = [
-    "ai-assisted-legacy-migration",
-    "llm-gateway-fallback",
-    "human-in-the-loop-content-pipeline",
-    "driver-app-offline-first",
-    "wms-modernization",
-    "homelab-k3s",
+    {
+        icon: Bot,
+        title: "AI-assisted engineering",
+        body: "Claude Code and Codex workflows with custom subagents, skills and MCP — plus LLM features built with guardrails: structured outputs, RAG, fallback chains and human review.",
+    },
 ];
 
 const workflow = projects.find((p) => p.slug === "agentic-engineering-workflow");
-const migration = projects.find((p) => p.slug === "ai-assisted-legacy-migration");
+const migration = projects.find((p) => p.slug === "enterprise-api-modernization");
 
 export default function Home() {
     const homeProjects = homeProjectSlugs
@@ -74,8 +65,8 @@ export default function Home() {
             <section className="container-page py-24">
                 <SectionHeading
                     eyebrow="what I bring"
-                    title="Senior engineering depth, applied to AI."
-                    subtitle="Most AI demos break in production. I combine 17 years of shipping real systems with hands-on LLM and agent engineering."
+                    title="Production engineering depth, modern tooling."
+                    subtitle="My differentiator: 17 years of shipping production systems, combined with modern backend architecture, mobile apps and practical AI-assisted development."
                 />
                 <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
                     {pillars.map((p, i) => (
@@ -115,8 +106,8 @@ export default function Home() {
                             <Reveal delay={0.08} className="space-y-4">
                                 <h3 className="font-display text-xl font-bold">Everywhere: spec-driven development</h3>
                                 <p className="text-muted-foreground">
-                                    Each phase runs as its own subagent. A four-lens review panel plus a refuter challenges every change, two
-                                    blind judges gate critical ones, and Engram MCP gives agents durable memory across sessions.
+                                    In Claude Code and Codex, each phase runs as its own subagent. A four-lens review panel plus a refuter
+                                    challenges every change, two blind judges gate critical ones, and Engram MCP gives agents durable memory.
                                 </p>
                                 <FlowDiagram steps={workflow.flow} label="sdd pipeline" />
                                 <Link href={"/projects/" + workflow.slug} className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
@@ -134,7 +125,7 @@ export default function Home() {
                     <SectionHeading
                         eyebrow="selected work"
                         title="Case studies"
-                        subtitle="Production systems at Nology Solutions and AI engineering from my personal R&D lab."
+                        subtitle="Enterprise engineering at Nology Solutions and ETB, plus personal R&D products with architecture diagrams and trade-offs."
                         className="mb-0"
                     />
                     <Button variant="outline" asChild className="self-start md:self-auto">
@@ -185,7 +176,7 @@ export default function Home() {
                     <div aria-hidden className="pointer-events-none absolute -top-24 left-1/2 h-64 w-[600px] -translate-x-1/2 rounded-full bg-primary/20 blur-[100px]" />
                     <p className="eyebrow relative">{"// let's talk"}</p>
                     <h2 className="relative mt-4 font-display text-3xl font-bold tracking-tight text-balance md:text-5xl">
-                        Building AI into your product or your engineering process?
+                        Looking for a senior engineer who ships?
                     </h2>
                     <p className="relative mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">{siteConfig.availability}.</p>
                     <div className="relative mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">

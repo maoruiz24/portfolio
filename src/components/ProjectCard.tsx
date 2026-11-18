@@ -1,17 +1,15 @@
 import Link from "next/link";
-import { ArrowUpRight, Sparkles } from "lucide-react";
-import { groupLabels, type Project } from "@/lib/data/projects";
+import { ArrowUpRight, Globe, Sparkles } from "lucide-react";
+import { categoryLabels, type Project } from "@/lib/data/projects";
 import { cn } from "@/lib/utils";
 
 interface ProjectCardProps {
     project: Project;
     className?: string;
-    /** Larger layout with the full summary and up to three metrics. */
-    large?: boolean;
 }
 
-export default function ProjectCard({ project, className, large = false }: ProjectCardProps) {
-    const metrics = project.metrics.slice(0, large ? 3 : 2);
+export default function ProjectCard({ project, className }: ProjectCardProps) {
+    const metrics = project.metrics.slice(0, 2);
 
     return (
         <Link
@@ -23,32 +21,40 @@ export default function ProjectCard({ project, className, large = false }: Proje
                 className
             )}
         >
-            <div className="mb-5 flex items-center justify-between gap-3 font-mono text-xs text-muted-foreground">
-                <span className="truncate">
-                    {project.org} · {project.period}
-                </span>
-                <span className="flex shrink-0 items-center gap-2">
+            <div className="mb-5 flex flex-wrap items-center gap-2 font-mono text-xs text-muted-foreground">
+                <span>{project.org}</span>
+                <span aria-hidden>·</span>
+                <span>{project.period}</span>
+                <span className="ml-auto flex items-center gap-1.5">
+                    {project.url && (
+                        <span className="inline-flex items-center gap-1 rounded-full bg-signal/15 px-2 py-0.5 text-signal">
+                            <Globe className="size-3" />
+                            Live
+                        </span>
+                    )}
                     {project.ai && (
                         <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-2 py-0.5 text-primary">
                             <Sparkles className="size-3" />
                             AI
                         </span>
                     )}
-                    <span className="rounded-full border border-border px-2 py-0.5">{groupLabels[project.group]}</span>
                 </span>
             </div>
 
+            <p className="mb-2 font-mono text-[11px] uppercase tracking-wider text-muted-foreground">
+                {categoryLabels[project.category]}
+            </p>
             <h3 className="font-display text-xl font-bold leading-snug tracking-tight text-balance transition-colors group-hover:text-primary md:text-2xl">
                 {project.title}
             </h3>
-            <p className="mt-3 text-muted-foreground text-pretty">{large ? project.summary : project.tagline}</p>
+            <p className="mt-3 text-muted-foreground text-pretty">{project.tagline}</p>
 
             {metrics.length > 0 && (
-                <dl className={cn("mt-6 grid gap-4 border-t border-border pt-5", large ? "grid-cols-3" : "grid-cols-2")}>
+                <dl className="mt-6 grid grid-cols-2 gap-4 border-t border-border pt-5">
                     {metrics.map((m) => (
                         <div key={m.label}>
                             <dt className="sr-only">{m.label}</dt>
-                            <dd className="font-display text-2xl font-bold text-foreground">{m.value}</dd>
+                            <dd className="font-display text-xl font-bold text-foreground">{m.value}</dd>
                             <dd className="text-xs leading-snug text-muted-foreground">{m.label}</dd>
                         </div>
                     ))}
@@ -57,7 +63,7 @@ export default function ProjectCard({ project, className, large = false }: Proje
 
             <div className="mt-auto flex items-end justify-between gap-4 pt-6">
                 <ul className="flex flex-wrap gap-1.5" aria-label="Tech stack">
-                    {project.stack.slice(0, large ? 5 : 4).map((tech) => (
+                    {project.stack.slice(0, 4).map((tech) => (
                         <li key={tech} className="rounded-md bg-muted px-2 py-0.5 font-mono text-[11px] text-muted-foreground">
                             {tech}
                         </li>

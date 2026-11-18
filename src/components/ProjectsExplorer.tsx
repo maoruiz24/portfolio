@@ -6,14 +6,14 @@ import ProjectCard from "@/components/ProjectCard";
 import { projects, type Project } from "@/lib/data/projects";
 import { cn } from "@/lib/utils";
 
-type Filter = "all" | "ai" | "professional" | "lab" | "earlier";
+type Filter = "all" | "enterprise" | "product" | "rnd" | "ai";
 
 const filters: { id: Filter; label: string; match: (p: Project) => boolean }[] = [
     { id: "all", label: "All", match: () => true },
+    { id: "enterprise", label: "Enterprise Engineering", match: (p) => p.category === "enterprise" },
+    { id: "product", label: "Personal R&D Products", match: (p) => p.category === "product" },
+    { id: "rnd", label: "Architecture & R&D", match: (p) => p.category === "rnd" },
     { id: "ai", label: "AI & LLM", match: (p) => p.ai },
-    { id: "professional", label: "Professional", match: (p) => p.group === "professional" },
-    { id: "lab", label: "R&D Lab", match: (p) => p.group === "lab" },
-    { id: "earlier", label: "Earlier career", match: (p) => p.group === "earlier" },
 ];
 
 export default function ProjectsExplorer() {

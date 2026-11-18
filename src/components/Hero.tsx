@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, Download, MapPin } from "lucide-react";
+import { ArrowRight, Download, Mail, MapPin } from "lucide-react";
 import { Github, Linkedin } from "@/components/brand-icons";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/lib/site";
@@ -14,11 +14,11 @@ const terminalLines: { prompt?: boolean; text: string; status?: string }[] = [
     { text: "legacy-analyst   inventory → tracker", status: "done" },
     { text: "migrator         port op → CQRS handler", status: "done" },
     { text: "tests            xUnit suite", status: "pass" },
+    { prompt: true, text: "codex \"review the diff against AGENTS.md\"" },
     { text: "reviewer         contract preserved", status: "ok" },
     { prompt: true, text: "llm-gateway eval --chain grading" },
     { text: "primary model    quota exceeded", status: "open" },
     { text: "backup model     rubric → JSON", status: "valid" },
-    { text: "cost + tokens    logged", status: "ok" },
 ];
 
 export default function Hero() {
@@ -57,18 +57,20 @@ export default function Hero() {
                         transition={{ duration: 0.7, delay: 0.1, ease }}
                         className="space-y-5"
                     >
-                        <p className="font-mono text-sm text-muted-foreground">
-                            {siteConfig.name} — <span className="text-foreground">{siteConfig.title}</span>
-                        </p>
+                        <p className="font-mono text-sm text-muted-foreground">Hi, I&apos;m {siteConfig.name}</p>
                         <h1 className="font-display text-4xl font-bold leading-[1.05] tracking-tight text-balance sm:text-5xl lg:text-6xl">
-                            I build production software —{" "}
-                            <span className="text-gradient">and the AI agents that help build it.</span>
+                            {siteConfig.title}
+                            <span className="block text-gradient">{siteConfig.tagline}</span>
                         </h1>
-                        <p className="max-w-xl text-lg text-muted-foreground text-pretty">
-                            17 years shipping enterprise systems in .NET, React, React Native and Node. Today I design LLM
-                            pipelines with guardrails — RAG, structured outputs, multi-provider fallback and human review —
-                            and run an agentic workflow with custom subagents, skills and MCP every day.
+                        <p className="flex flex-wrap gap-x-3 gap-y-1 font-mono text-sm text-foreground/80">
+                            {siteConfig.specialties.map((s, i) => (
+                                <span key={s} className="flex items-center gap-3">
+                                    {i > 0 && <span aria-hidden className="text-primary">•</span>}
+                                    {s}
+                                </span>
+                            ))}
                         </p>
+                        <p className="max-w-xl text-lg text-muted-foreground text-pretty">{siteConfig.intro}</p>
                     </motion.div>
 
                     <motion.div
@@ -79,7 +81,7 @@ export default function Hero() {
                     >
                         <Button size="lg" asChild>
                             <Link href="/projects">
-                                View case studies
+                                Explore my work
                                 <ArrowRight className="size-4" />
                             </Link>
                         </Button>
@@ -98,6 +100,11 @@ export default function Hero() {
                             <Button variant="ghost" size="icon" asChild>
                                 <a href={siteConfig.links.github} target="_blank" rel="noreferrer" aria-label="GitHub">
                                     <Github className="size-5" />
+                                </a>
+                            </Button>
+                            <Button variant="ghost" size="icon" asChild>
+                                <a href={siteConfig.links.email} aria-label="Email">
+                                    <Mail className="size-5" />
                                 </a>
                             </Button>
                         </div>

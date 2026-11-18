@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-Portafolio personal de Ivan Ruiz — **Senior Software Engineer · AI Engineering**. Es su herramienta principal de búsqueda de empleo (roles de Senior AI Engineer / Applied AI / Full-Stack AI). Sitio estático con Next.js App Router, desplegado como contenedor Docker en su clúster k3s propio.
+Portafolio personal de Ivan Ruiz — **Senior Software Engineer | Backend, Cloud & AI Systems**. Es su herramienta principal de búsqueda de empleo (Senior Software / Backend / Full-Stack Engineer y Senior SWE — Applied AI). Sitio estático con Next.js App Router, desplegado como contenedor Docker en su clúster k3s propio.
 
 - Repo: https://github.com/maoruiz24/portfolio (rama `main`)
 - Dominio: **https://iruiz.dev** (`siteConfig.url` en [src/lib/site.ts](src/lib/site.ts))
@@ -53,11 +53,11 @@ src/
     providers.tsx         # ThemeProvider (dark por defecto) + MotionConfig
     Reveal.tsx            # Wrapper client de animación al entrar en viewport (permite páginas server)
     SectionHeading.tsx    # eyebrow "// texto" + título + subtítulo
-    Hero, Navbar, Footer, ThemeToggle, ProjectCard, ProjectsExplorer, FlowDiagram,
+    Hero, Navbar, Footer, ThemeToggle, ProjectCard, ProjectsExplorer, FlowDiagram, ArchitectureDiagram,
     Timeline, SkillsGrid, ContactForm, CopyEmailButton, PrintButton, JsonLd, brand-icons
   lib/
     site.ts               # siteConfig: identidad, url, email, teléfono, availability, stats, idiomas, educación, SEO ← fuente única
-    data/projects.ts      # Project[] + groupLabels (professional | lab | earlier, flag ai, featured, metrics, flow…)
+    data/projects.ts      # Project[] + categoryLabels (enterprise | product | rnd), url, architecture, decisions… + homeProjectSlugs
     data/experience.ts    # Experience[] — bullets compartidos por /experience, home y /resume
     data/skills.ts        # SkillGroup[] con "proof" por grupo
     utils.ts              # cn() = clsx + tailwind-merge
@@ -71,15 +71,19 @@ tmp/                      # Notas locales (brief de Nology). En .gitignore — n
 ## Reglas de contenido (importantes)
 
 - **Cero métricas inventadas.** Cada número debe venir del usuario o de evidencia verificable (git, tests, docs). Si falta, deja el texto sin número y pregunta.
-- **Permiso de trabajo:** el usuario tiene un permiso que solo le permite trabajar para Nology. Todo proyecto fuera de Nology se presenta como **"Personal R&D"**: sin clientes, ingresos, precios, planes de pago, dominios comerciales ni lenguaje de negocio/freelance. No mencionar el estado migratorio en el sitio (lo trata en entrevistas).
-- El TMS/SaaS logístico propio está **pausado**: aparece solo como "Multi-Tenant Platform Architecture (Paused)", no destacado.
+- **Permiso de trabajo:** el usuario tiene un permiso que solo le permite trabajar para Nology. Todo proyecto fuera de Nology se presenta como **"Personal R&D"** (categoría `product` o `rnd`). Se permiten URLs públicas (`url`: hellotcf.com, farmilygo.com), pero **nunca** precios, suscripciones, pagos, usuarios, ingresos ni lenguaje de negocio/freelance. No mencionar el estado migratorio en el sitio (lo trata en entrevistas).
+- **Nada que caduque con cada release:** no publicar números de versión, conteo de releases ni de upgrades de SDK (p. ej. "v1.7.6", "45 releases"). Usar formulaciones estables ("since 2023", "continuous releases") y cifras con "+" para contadores que crecen ("90+ tests", "1,250+ commits").
+- Métricas confirmadas por el usuario (Nov 2026): ~200 clientes empresariales del SaaS; 500–1,000 usuarios recurrentes de la Driver app; páginas críticas de ~12–18 s a 2–3 s. No mezclar clientes del SaaS con usuarios de la app.
+- El TMS/SaaS logístico propio está **pausado**: aparece como "Multi-Tenant Logistics SaaS Prototype" (status Paused) en Architecture & R&D, distinguiendo implementado / prototipo / diseñado / planeado.
 - Nology: se puede nombrar DeliverySuite (producto público en las tiendas). Nada de clientes, URLs internas ni código.
 - El teléfono solo aparece en `/resume` y el PDF; en el resto del sitio solo email/LinkedIn/GitHub.
-- Posicionamiento: profundidad de ingeniería senior + IA (agentes, MCP, RAG, evals/LLM-as-judge, observabilidad/costos, human-in-the-loop). Mantener esas palabras clave alineadas con ofertas actuales.
+- Posicionamiento: ingeniero senior de backend/SaaS/mobile con IA como diferenciador (Claude Code y Codex, agentes, MCP, RAG, human-in-the-loop). No posicionarlo como investigador de ML ni ingeniero de infraestructura.
+- Casos de estudio principales (Driver, API modernization, HelloTCF, WMS, FarmilyGo) llevan: features, problem, responsibilities, architecture (diagrama por capas), decisions con trade-off, challenges, approach, impact, stack, learning. Orden de la home en `homeProjectSlugs`.
+- Slugs renombrados se redirigen en `next.config.ts` (`renamedProjects`); si renombras otro, añádelo ahí.
 
 ## Convenciones de UI
 
-- Estética "consola de ingeniería": fondo oscuro, acento verde menta (`primary`), `signal` ámbar para estados, etiquetas `font-mono`, rejilla sutil (`bg-grid`).
+- Estética "consola de ingeniería": fondo oscuro, acento **azul** (`primary`), `signal` ámbar para estados, etiquetas `font-mono`, rejilla sutil (`bg-grid`). El OG image y /resume usan azul fijo (`#60a5fa`, `text-blue-800`).
 - Tokens en `:root` (claro) y `.dark` (oscuro) con oklch en [globals.css](src/app/globals.css); usar siempre clases semánticas (`bg-card`, `text-muted-foreground`, `text-primary`, `border-border`, `text-signal`…). Toda UI debe verse bien en ambos temas.
 - Utilidades propias (`@utility`): `container-page` (ancho máximo + gutters), `bg-grid`, `text-gradient`, `eyebrow`.
 - Páginas = Server Components; interactividad aislada en componentes client. Animaciones de entrada con `<Reveal>`.

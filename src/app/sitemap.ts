@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { projects } from "@/lib/data/projects";
+import { homeProjectSlugs, projects } from "@/lib/data/projects";
 import { siteConfig } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -15,7 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     const projectUrls = projects.map((project) => ({
         url: baseUrl + "/projects/" + project.slug,
         lastModified,
-        priority: project.featured ? 0.7 : 0.5,
+        priority: homeProjectSlugs.includes(project.slug) ? 0.7 : 0.5,
     }));
 
     return [...routes, ...projectUrls];

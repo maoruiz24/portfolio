@@ -1,120 +1,77 @@
+/**
+ * Skills, grouped by category.
+ * - `items`: used in professional, production work (Nology, ETB, Indra) or daily engineering practice.
+ * - `lab`: used only in personal R&D projects — shown separately so nothing implies production
+ *   experience that doesn't exist.
+ */
 export interface SkillGroup {
     name: string;
     /** lucide icon name rendered by the SkillsGrid component. */
-    icon: "brain" | "bot" | "server" | "layout" | "database" | "cloud" | "check";
+    icon: "server" | "network" | "database" | "layout" | "cloud" | "bot" | "check";
     highlight?: boolean;
     items: string[];
+    lab?: string[];
     proof: string;
 }
 
 export const skillGroups: SkillGroup[] = [
     {
-        name: "AI Engineering",
-        icon: "brain",
-        highlight: true,
-        items: [
-            "LLM application design",
-            "Agents & tool use",
-            "RAG (pgvector, embeddings)",
-            "Structured outputs (Zod / Pydantic)",
-            "LLM-as-judge review",
-            "Human-in-the-loop workflows",
-            "Multi-provider routing & fallback",
-            "Token & cost tracking",
-            "STT / TTS pipelines",
-            "Prompt versioning",
-            "Anthropic Claude · OpenAI · Gemini · Groq",
-            "Vercel AI SDK",
-        ],
-        proof: "LLM gateway with circuit breakers, gated generation pipelines and speech evaluation — see the R&D lab.",
-    },
-    {
-        name: "AI-Assisted Development",
-        icon: "bot",
-        highlight: true,
-        items: [
-            "Claude Code",
-            "Custom subagents",
-            "Skills & slash commands",
-            "MCP servers",
-            "Spec-driven development",
-            "Multi-agent code review",
-            "Persistent agent memory (Engram)",
-            "CLAUDE.md / AGENTS.md",
-        ],
-        proof: "9 custom subagents migrating a production .NET backend at work; a full SDD pipeline in my own projects.",
-    },
-    {
-        name: "Backend & Architecture",
+        name: "Backend",
         icon: "server",
-        items: [
-            "C# / .NET 10",
-            "ASP.NET Core",
-            "Clean Architecture · CQRS",
-            "Node.js · NestJS",
-            "Python · FastAPI",
-            "Go (services)",
-            "REST APIs · JWT",
-            "Microservices · Modular monoliths",
-            "Queues: BullMQ · pg-boss · Dramatiq",
-            "Hexagonal architecture · ADRs",
-        ],
-        proof: "Three independent .NET 10 APIs with 96 tests; hexagonal modular monoliths in TypeScript and Python.",
+        highlight: true,
+        items: [".NET / C#", "ASP.NET Core · Web API", "Node.js", "TypeScript", "REST APIs", "SQL stored procedures", "Java (earlier career)"],
+        lab: ["NestJS", "Python · FastAPI", "Go"],
+        proof: "Three independently deployable .NET 10 APIs with 90+ tests at Nology; Node.js microservices at ETB.",
     },
     {
-        name: "Frontend & Mobile",
-        icon: "layout",
+        name: "Architecture",
+        icon: "network",
         items: [
-            "React · Next.js",
-            "TypeScript",
-            "React Native · Expo / EAS",
-            "Redux Toolkit · TanStack Query · Zustand",
-            "Tailwind CSS · shadcn/ui",
-            "DevExtreme · jQuery",
-            "Offline-first mobile",
+            "Enterprise SaaS",
+            "Multi-tenancy",
+            "API design",
+            "Clean Architecture · CQRS",
+            "Microservices",
+            "Legacy modernization",
+            "Offline-first sync",
         ],
-        proof: "45 store releases of a driver app with offline-first sync and background GPS.",
+        lab: ["Event-driven (NATS, job queues)", "Hexagonal modular monoliths", "ADRs"],
+        proof: "Incremental modernization of a multi-tenant logistics SaaS serving ~200 business customers.",
     },
     {
         name: "Data",
         icon: "database",
-        items: [
-            "SQL Server · T-SQL",
-            "PostgreSQL · pgvector",
-            "Prisma · Dapper · EF Core",
-            "MongoDB",
-            "Redis",
-            "Oracle",
-            "Safe data migrations & rollbacks",
-        ],
-        proof: "Production WMS data repairs shipped with backups and rollback scripts.",
+        items: ["SQL Server · T-SQL", "Query & index optimization", "Transactions & data integrity", "Oracle", "MongoDB", "SQLite (mobile)"],
+        lab: ["PostgreSQL", "Redis", "pgvector · PostGIS", "Prisma"],
+        proof: "Selected critical pages from ~12–18 s to 2–3 s through stored-procedure and index tuning.",
     },
     {
-        name: "Cloud & Platform",
+        name: "Frontend & Mobile",
+        icon: "layout",
+        items: ["React", "React Native", "Expo / EAS", "JavaScript · TypeScript", "Redux Toolkit", "jQuery · DevExtreme", "Xamarin (earlier career)"],
+        lab: ["Next.js", "TanStack Query · Zustand", "Tailwind CSS"],
+        proof: "A driver app built from the ground up, released continuously on both stores since 2023.",
+    },
+    {
+        name: "Cloud & Delivery",
         icon: "cloud",
-        items: [
-            "Docker",
-            "Kubernetes (k3s)",
-            "GitHub Actions · Azure DevOps",
-            "Traefik · cert-manager",
-            "Azure · AWS",
-            "Firebase",
-            "MinIO / S3",
-            "Observability (Crashlytics, Serilog, ELK)",
-        ],
-        proof: "A self-hosted 3-node k3s cluster that deploys this site on every push.",
+        items: ["Azure", "AWS", "Docker", "Kubernetes", "Git · Azure DevOps", "CI/CD", "Expo EAS", "Firebase"],
+        lab: ["k3s · Proxmox", "OPNsense", "GitHub Actions", "Traefik · cert-manager", "MinIO / S3", "Prometheus"],
+        proof: "Kubernetes microservices on Azure at ETB; a self-hosted Proxmox + k3s platform for my R&D work.",
+    },
+    {
+        name: "AI Engineering",
+        icon: "bot",
+        highlight: true,
+        items: ["Claude Code", "Codex", "Custom subagents & skills", "MCP integrations", "Agent workflows", "AI-assisted debugging & migration"],
+        lab: ["LLM APIs (Anthropic, OpenAI, Gemini, Groq)", "RAG (pgvector)", "Structured outputs", "LLM-as-judge review", "STT / TTS"],
+        proof: "AI-assisted legacy migration at work; LLM features with fallback chains and human review in R&D products.",
     },
     {
         name: "Quality & Leadership",
         icon: "check",
-        items: [
-            "xUnit · Vitest · Jest · Playwright",
-            "Code review",
-            "Technical leadership",
-            "Mentoring",
-            "Scrum",
-            "Project management (specialization)",
-        ],
+        items: ["xUnit · Jest", "Code review", "Technical leadership", "Mentoring", "QA processes", "Scrum"],
+        lab: ["Playwright · Vitest", "k6 load testing"],
         proof: "Led a Telefónica delivery team at Indra and built its QA function.",
     },
 ];

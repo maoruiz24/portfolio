@@ -18,7 +18,7 @@ export default function OpengraphImage() {
                     padding: "72px",
                     background: "#0d1017",
                     backgroundImage:
-                        "radial-gradient(circle at 50% -20%, rgba(94, 234, 180, 0.28), transparent 55%)",
+                        "radial-gradient(circle at 50% -20%, rgba(96, 165, 250, 0.3), transparent 55%)",
                     color: "#f2f4f7",
                     fontFamily: "sans-serif",
                 }}
@@ -32,7 +32,7 @@ export default function OpengraphImage() {
                             width: 56,
                             height: 56,
                             borderRadius: 12,
-                            background: "#5eeab4",
+                            background: "#60a5fa",
                             color: "#0d1017",
                             fontWeight: 700,
                         }}
@@ -43,9 +43,9 @@ export default function OpengraphImage() {
                 </div>
                 <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
                     <div style={{ fontSize: 76, fontWeight: 700, lineHeight: 1.05 }}>{siteConfig.name}</div>
-                    <div style={{ fontSize: 40, color: "#5eeab4" }}>{siteConfig.title}</div>
+                    <div style={{ fontSize: 40, color: "#60a5fa" }}>{siteConfig.title + " · " + siteConfig.tagline}</div>
                     <div style={{ fontSize: 28, color: "#9aa3b2", maxWidth: 980 }}>
-                        LLM systems with guardrails · AI agents & MCP · 17 years shipping production software
+                        Backend architecture · Enterprise SaaS · AI-assisted engineering · 17 years in production
                     </div>
                 </div>
                 <div style={{ display: "flex", fontSize: 24, color: "#9aa3b2" }}>{siteConfig.location}</div>

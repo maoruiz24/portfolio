@@ -32,7 +32,7 @@ const chapters = [
     {
         years: "2025 – today",
         title: "Engineering with AI",
-        body: "I now build LLM systems with guardrails and run an agentic workflow — subagents, skills, MCP and persistent memory — both at work and in my R&D lab on a self-hosted Kubernetes cluster.",
+        body: "I now run agentic development workflows with Claude Code and Codex — subagents, skills, MCP and persistent memory — at work and in my R&D projects, and build LLM features with guardrails on a self-hosted Kubernetes cluster.",
     },
 ];
 
@@ -70,8 +70,8 @@ export default function AboutPage() {
                             observability and humans in the loop.
                         </p>
                         <p>
-                            I&apos;m looking for a team where AI agents are central to the product or to the engineering process, and where
-                            17 years of production experience is an asset in making them reliable.
+                            I&apos;m looking for a senior role — backend, full-stack or applied AI — on a team that values production
+                            experience and wants to build with modern tooling, AI agents included.
                         </p>
                     </Reveal>
                 </div>
@@ -80,7 +80,7 @@ export default function AboutPage() {
                     <dl className="mt-5 space-y-4 text-sm">
                         <div>
                             <dt className="text-muted-foreground">Role</dt>
-                            <dd className="font-medium">{siteConfig.title}</dd>
+                            <dd className="font-medium">{siteConfig.title + " · " + siteConfig.tagline}</dd>
                         </div>
                         <div>
                             <dt className="text-muted-foreground">Based in</dt>
@@ -92,7 +92,7 @@ export default function AboutPage() {
                         </div>
                         <div>
                             <dt className="text-muted-foreground">Looking for</dt>
-                            <dd className="font-medium">Senior AI Engineer · Applied AI · Full-Stack AI</dd>
+                            <dd className="font-medium">Senior Software / Backend / Full-Stack Engineer · Applied AI</dd>
                         </div>
                     </dl>
                     <Button asChild className="mt-6 w-full">

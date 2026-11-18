@@ -18,63 +18,64 @@ export const metadata: Metadata = {
 
 const skillLines: { label: string; value: string }[] = [
     {
-        label: "AI Engineering",
-        value:
-            "LLM applications, agents & tool use, RAG (pgvector, embeddings), structured outputs (Zod, Pydantic), LLM-as-judge review, human-in-the-loop workflows, multi-provider routing & fallback, token/cost tracking, STT/TTS pipelines, prompt versioning; Anthropic Claude, OpenAI, Gemini, Groq, Vercel AI SDK",
-    },
-    {
-        label: "AI-Assisted Development",
-        value:
-            "Claude Code, custom subagents, skills & slash commands, MCP servers, spec-driven development, multi-agent code review, persistent agent memory (Engram)",
-    },
-    {
         label: "Backend",
-        value:
-            "C#, .NET 10, ASP.NET Core, Clean Architecture, CQRS/MediatR, Node.js, NestJS, Python, FastAPI, Go, REST, JWT, microservices, BullMQ, pg-boss, Dramatiq",
+        value: "C#, .NET / .NET 10, ASP.NET Core Web API, Node.js, TypeScript, REST APIs, SQL stored procedures, Java (earlier career)",
     },
     {
-        label: "Frontend & Mobile",
-        value:
-            "TypeScript, React, Next.js, React Native, Expo/EAS, Redux Toolkit, TanStack Query, Zustand, Tailwind CSS, DevExtreme",
+        label: "Architecture",
+        value: "Enterprise SaaS, multi-tenancy, API design, Clean Architecture, CQRS/MediatR, microservices, legacy modernization, offline-first sync",
     },
     {
         label: "Data",
-        value: "SQL Server (T-SQL), PostgreSQL, pgvector, Prisma, Dapper, EF Core, MongoDB, Redis, Oracle",
+        value: "SQL Server (T-SQL, query and index optimization, transactions, data integrity), Oracle, MongoDB, SQLite",
     },
     {
-        label: "Cloud & DevOps",
-        value:
-            "Docker, Kubernetes (k3s), GitHub Actions, Azure DevOps, Azure, AWS, Firebase, MinIO/S3, Traefik, cert-manager; testing with xUnit, Vitest, Jest, Playwright",
+        label: "Frontend & Mobile",
+        value: "React, React Native, Expo/EAS, JavaScript, TypeScript, Redux Toolkit, jQuery/DevExtreme, Xamarin (earlier career)",
+    },
+    {
+        label: "Cloud & Delivery",
+        value: "Azure, AWS, Docker, Kubernetes, Git, Azure DevOps, CI/CD, Expo EAS, Firebase; testing with xUnit and Jest",
+    },
+    {
+        label: "AI Engineering",
+        value: "Claude Code, Codex, custom subagents and skills, MCP integrations, agent workflows, AI-assisted debugging and legacy migration",
+    },
+    {
+        label: "Personal R&D",
+        value: "NestJS, Python/FastAPI, Go, PostgreSQL (pgvector, PostGIS), Redis, Next.js, LLM APIs, RAG, STT/TTS, Proxmox, OPNsense, k3s, GitHub Actions, Playwright, k6",
     },
 ];
 
-const rdProjects: { name: string; detail: string }[] = [
+const rdProjects: { name: string; url?: string; detail: string }[] = [
     {
-        name: "Multi-provider LLM gateway",
+        name: "HelloTCF",
+        url: "hellotcf.com",
         detail:
-            "8 provider adapters behind one interface; admin-configured 3-tier fallback chains; Postgres-persisted circuit breaker; per-call token and cost logging; RAG assistant on pgvector; rubric-based grading of writing and speech.",
+            "AI-powered TCF Canada practice platform (Next.js 16, PostgreSQL/pgvector, k3s): exam simulations, AI-graded writing and speaking, a conversational speaking examiner (STT/TTS), RAG assistant; provider-agnostic LLM layer with 8 adapters, 3-tier fallback chains, a Postgres-persisted circuit breaker and per-call cost logging.",
+    },
+    {
+        name: "FarmilyGo",
+        url: "farmilygo.com",
+        detail:
+            "Farm-to-consumer marketplace: Turborepo monorepo with Next.js 16 web, Expo mobile and NestJS 11 API; PostgreSQL with PostGIS and pgvector; Claude-powered listing assistant (vision) and semantic search; Playwright E2E and k6 load tests.",
     },
     {
         name: "Human-in-the-loop LLM content pipeline",
         detail:
-            "Blueprint → LLM generation → schema and rule validation → independent LLM reviewer → human approval of immutable revisions → TTS jobs, with full provenance (model, prompt version, cost). Built in TypeScript (BullMQ) and Python (FastAPI, Pydantic, Dramatiq).",
+            "LLM generation → schema and rule validation → independent LLM reviewer → human approval of immutable revisions → TTS jobs, with full provenance; built in TypeScript (BullMQ) and Python (FastAPI, Pydantic, Dramatiq).",
     },
     {
-        name: "Speech evaluation pipeline",
+        name: "Homelab platform",
         detail:
-            "STT with word timestamps + deterministic fluency metrics + LLM rubric evaluation with validated JSON; hexagonal modular monolith with one port per AI capability and 14 ADRs.",
-    },
-    {
-        name: "Homelab Kubernetes platform",
-        detail:
-            "3-node k3s cluster with Traefik, cert-manager (Let's Encrypt via Cloudflare DNS-01), private registry and GitHub Actions push-to-deploy; hosts this portfolio.",
+            "Proxmox (2 nodes, VMs and LXC) behind an OPNsense firewall with site-to-site VPN; 3-node k3s cluster (Traefik, cert-manager, private registry, GitHub Actions); dedicated PostgreSQL, Redis and MinIO; daily backups with two off-site copies. Hosts this portfolio and HelloTCF.",
     },
 ];
 
 function ResumeSection({ title, children }: { title: string; children: React.ReactNode }) {
     return (
         <section className="mt-5 print:mt-3.5">
-            <h2 className="break-after-avoid border-b border-zinc-300 pb-1 text-[11px] font-bold uppercase tracking-[0.14em] text-emerald-800">
+            <h2 className="break-after-avoid border-b border-zinc-300 pb-1 text-[11px] font-bold uppercase tracking-[0.14em] text-blue-800">
                 {title}
             </h2>
             <div className="mt-2.5 print:mt-1.5">{children}</div>
@@ -102,7 +103,7 @@ export default function ResumePage() {
             <article className="mx-auto max-w-[8.5in] rounded-lg bg-white px-8 py-10 text-[13px] leading-[1.45] text-zinc-800 shadow-xl ring-1 ring-black/5 md:px-14 print:max-w-none print:rounded-none print:p-0 print:text-[9.5pt] print:leading-[1.38] print:shadow-none print:ring-0">
                 <header>
                     <h1 className="font-display text-3xl font-bold tracking-tight text-zinc-900">{siteConfig.name}</h1>
-                    <p className="mt-0.5 text-base font-medium text-emerald-800">{siteConfig.title}</p>
+                    <p className="mt-0.5 text-base font-medium text-blue-800">{siteConfig.title} | {siteConfig.tagline}</p>
                     <p className="mt-2 text-zinc-600">
                         {siteConfig.location} · {siteConfig.phone} ·{" "}
                         <a href={siteConfig.links.email} className="underline-offset-2 hover:underline">
@@ -151,7 +152,7 @@ export default function ResumePage() {
                                     </p>
                                 </div>
                                 <p className="italic text-zinc-600">{exp.context}</p>
-                                <ul className="mt-1.5 list-disc space-y-1 pl-5 marker:text-emerald-700 print:space-y-0.5">
+                                <ul className="mt-1.5 list-disc space-y-1 pl-5 marker:text-blue-700 print:space-y-0.5">
                                     {exp.bullets.map((b) => (
                                         <li key={b} className="break-inside-avoid">{b}</li>
                                     ))}
@@ -161,11 +162,12 @@ export default function ResumePage() {
                     </div>
                 </ResumeSection>
 
-                <ResumeSection title="Selected AI R&D Projects (personal)">
-                    <ul className="list-disc space-y-1 pl-5 marker:text-emerald-700">
+                <ResumeSection title="Selected Personal R&D Projects">
+                    <ul className="list-disc space-y-1 pl-5 marker:text-blue-700">
                         {rdProjects.map((p) => (
                             <li key={p.name}>
-                                <span className="font-semibold text-zinc-900">{p.name}:</span> {p.detail}
+                                <span className="font-semibold text-zinc-900">{p.name}</span>
+                                {p.url && <span className="text-zinc-600"> ({p.url})</span>}: {p.detail}
                             </li>
                         ))}
                     </ul>

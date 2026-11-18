@@ -42,7 +42,7 @@ export default function Footer() {
             </div>
             <div className="container-page flex flex-col justify-between gap-2 border-t border-border/60 py-6 font-mono text-xs text-muted-foreground md:flex-row">
                 <p>© {new Date().getFullYear()} {siteConfig.name}</p>
-                <p>Next.js 16 · self-hosted on k3s · built with Claude Code</p>
+                <p>Next.js 16 · self-hosted on k3s · built with Claude Code &amp; Codex</p>
             </div>
         </footer>
     );

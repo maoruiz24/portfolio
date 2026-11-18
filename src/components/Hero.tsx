@@ -59,8 +59,9 @@ export default function Hero() {
                     >
                         <p className="font-mono text-sm text-muted-foreground">Hi, I&apos;m {siteConfig.name}</p>
                         <h1 className="font-display text-4xl font-bold leading-[1.05] tracking-tight text-balance sm:text-5xl lg:text-6xl">
-                            {siteConfig.title}
-                            <span className="block text-gradient">{siteConfig.tagline}</span>
+                            {/* Non-breaking hyphen keeps "Full-Stack" on one line. */}
+                            {siteConfig.title.replace("-", "‑")}
+                            <span className="mt-3 block text-3xl leading-tight text-gradient sm:text-4xl lg:text-5xl">{siteConfig.headline}</span>
                         </h1>
                         <p className="flex flex-wrap gap-x-3 gap-y-1 font-mono text-sm text-foreground/80">
                             {siteConfig.specialties.map((s, i) => (

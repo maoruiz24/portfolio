@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Bot, Boxes, Server, Smartphone } from "lucide-react";
+import { ArrowRight, Bot, LayoutTemplate, Rocket, Server } from "lucide-react";
 import Hero from "@/components/Hero";
 import Reveal from "@/components/Reveal";
 import SectionHeading from "@/components/SectionHeading";
@@ -15,24 +15,24 @@ import { siteConfig } from "@/lib/site";
 
 const pillars = [
     {
+        icon: LayoutTemplate,
+        title: "Frontend & mobile",
+        body: "Clean, accessible interfaces in React and Next.js, and a React Native app built from the ground up and published on both stores — offline-first, with background GPS and proof of delivery.",
+    },
+    {
         icon: Server,
-        title: "Backend architecture",
-        body: ".NET, Node.js and SQL Server systems designed for change: Clean Architecture, CQRS, independently deployable APIs, tested endpoints and incremental modernization of legacy code.",
+        title: "Backend & data",
+        body: ".NET, Node.js and SQL Server systems designed for change: Clean Architecture, CQRS, independently deployable APIs and query tuning that took critical pages from 12–18 s to 2–3 s.",
     },
     {
-        icon: Boxes,
-        title: "Enterprise SaaS",
-        body: "Multi-tenant logistics software serving ~200 business customers — performance tuning, data integrity, safe migrations and continuous delivery on a live product.",
-    },
-    {
-        icon: Smartphone,
-        title: "Mobile engineering",
-        body: "A React Native driver app built from the ground up and published on both stores: offline-first sync, background GPS, barcode scanning and proof of delivery.",
+        icon: Rocket,
+        title: "CI/CD & cloud",
+        body: "Automated delivery from commit to production: Azure DevOps workflows, Expo EAS builds and store releases, Docker and Kubernetes, and GitHub Actions pipelines that deploy on every push.",
     },
     {
         icon: Bot,
         title: "AI-assisted engineering",
-        body: "Claude Code and Codex workflows with custom subagents, skills and MCP — plus LLM features built with guardrails: structured outputs, RAG, fallback chains and human review.",
+        body: "Claude Code and Codex in daily use — custom subagents, skills and MCP — plus LLM features built with guardrails: structured outputs, RAG, fallback chains and human review.",
     },
 ];
 
@@ -65,8 +65,8 @@ export default function Home() {
             <section className="container-page py-24">
                 <SectionHeading
                     eyebrow="what I bring"
-                    title="Production engineering depth, modern tooling."
-                    subtitle="My differentiator: 17 years of shipping production systems, combined with modern backend architecture, mobile apps and practical AI-assisted development."
+                    title="End-to-end ownership, from pixels to pipelines."
+                    subtitle="I work across the whole stack — interface, API, database and delivery — with 17 years of production experience and practical AI-assisted development."
                 />
                 <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
                     {pillars.map((p, i) => (

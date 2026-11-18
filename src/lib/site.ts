@@ -3,20 +3,22 @@ export const siteConfig = {
   shortName: "iruiz",
   url: "https://iruiz.dev",
   /** Primary job title — keep short; used in metadata, résumé and OG image. */
-  title: "Senior Software Engineer",
-  /** Positioning that follows the title: "Senior Software Engineer · Backend, Cloud & AI Systems". */
-  tagline: "Backend, Cloud & AI Systems",
-  specialties: ["Backend Architecture", "Enterprise SaaS", "AI-Assisted Engineering"],
+  title: "Senior Full-Stack Engineer",
+  /** Second line of the home hero. */
+  headline: "From UI to database to deployment.",
+  /** Positioning used next to the title in the résumé, OG image and About: "Title | tagline". */
+  tagline: "Web, Mobile, Cloud & AI-Assisted Delivery",
+  specialties: ["React & React Native", ".NET & Node.js", "SQL", "CI/CD & Cloud", "AI-Assisted Engineering"],
   intro:
-    "I design, modernize and scale production software. With 17 years of experience, I specialize in backend systems, multi-tenant SaaS platforms and mobile applications — and in engineering workflows powered by AI agents like Claude Code and Codex.",
+    "I design, build and ship production software end to end — polished web and mobile interfaces, scalable backends and automated delivery pipelines. 17 years across logistics, telecom and enterprise SaaS, now amplified by AI agents like Claude Code and Codex.",
   summary:
-    "Senior software engineer with 17 years of experience building and modernizing production systems for logistics, telecom and enterprise clients. I specialize in backend architecture (.NET, Node.js, SQL), multi-tenant SaaS and cross-platform mobile apps, and I bring AI into engineering practice: agentic development workflows with Claude Code and Codex (subagents, skills, MCP) and LLM features built with guardrails — structured outputs, RAG, multi-provider fallback and human review.",
+    "Senior full-stack engineer with 17 years of experience designing, building and shipping production software for logistics, telecom and enterprise clients — from React and React Native front ends to .NET, Node.js and SQL Server back ends and automated CI/CD pipelines. I modernize multi-tenant SaaS platforms, build cross-platform mobile apps and bring AI into engineering practice with Claude Code and Codex (subagents, skills, MCP), plus LLM features built with guardrails.",
   email: "maoruiz24@gmail.com",
   phone: "(647) 574-5058",
   location: "Mississauga, ON, Canada",
   availability:
-    "Open to Senior Software Engineer, Senior Backend, Senior Full-Stack and Applied AI roles · GTA hybrid or remote",
-  targetRoles: ["Senior Software Engineer", "Senior Backend Engineer", "Senior Full-Stack Engineer", "Senior Software Engineer — Applied AI"],
+    "Open to Senior Full-Stack, Senior Software and Applied AI engineering roles · GTA hybrid or remote",
+  targetRoles: ["Senior Full-Stack Engineer", "Senior Software Engineer", "Senior Backend Engineer", "Senior Software Engineer — Applied AI"],
   resumePdf: "/Resume-IvanRuiz.pdf",
   links: {
     linkedin: "https://linkedin.com/in/maoruiz24",
@@ -53,11 +55,14 @@ export const siteConfig = {
   ],
   seo: {
     description:
-      "Ivan Ruiz — Senior Software Engineer (Backend, Cloud & AI Systems) in Mississauga, ON. 17 years building and modernizing enterprise SaaS, .NET and Node.js backends, React Native apps and AI-assisted engineering workflows with Claude Code and Codex.",
+      "Ivan Ruiz — Senior Full-Stack Engineer in Mississauga, ON. 17 years building and shipping production software end to end: React and React Native front ends, .NET, Node.js and SQL Server back ends, CI/CD pipelines and AI-assisted engineering with Claude Code and Codex.",
     keywords: [
-      "Senior Software Engineer",
-      "Senior Backend Engineer",
       "Senior Full-Stack Engineer",
+      "Senior Software Engineer",
+      "Full-Stack Developer",
+      "React",
+      "CI/CD",
+      "Azure DevOps",
       "Applied AI",
       ".NET",
       "C#",

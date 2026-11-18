@@ -70,7 +70,7 @@ export default function AboutPage() {
                             observability and humans in the loop.
                         </p>
                         <p>
-                            I&apos;m looking for a senior role — backend, full-stack or applied AI — on a team that values production
+                            I&apos;m looking for a senior full-stack or software engineering role — including applied AI — on a team that values production
                             experience and wants to build with modern tooling, AI agents included.
                         </p>
                     </Reveal>
@@ -92,7 +92,7 @@ export default function AboutPage() {
                         </div>
                         <div>
                             <dt className="text-muted-foreground">Looking for</dt>
-                            <dd className="font-medium">Senior Software / Backend / Full-Stack Engineer · Applied AI</dd>
+                            <dd className="font-medium">Senior Full-Stack / Software Engineer · Applied AI</dd>
                         </div>
                     </dl>
                     <Button asChild className="mt-6 w-full">

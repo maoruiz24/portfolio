@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-Portafolio personal de Ivan Ruiz — **Senior Software Engineer | Backend, Cloud & AI Systems**. Es su herramienta principal de búsqueda de empleo (Senior Software / Backend / Full-Stack Engineer y Senior SWE — Applied AI). Sitio estático con Next.js App Router, desplegado como contenedor Docker en su clúster k3s propio.
+Portafolio personal de Ivan Ruiz — **Senior Full-Stack Engineer | Web, Mobile, Cloud & AI-Assisted Delivery** (hero: "From UI to database to deployment."). Es su herramienta principal de búsqueda de empleo (Senior Full-Stack / Software Engineer, también Backend y Senior SWE — Applied AI). Sitio estático con Next.js App Router, desplegado como contenedor Docker en su clúster k3s propio.
 
 - Repo: https://github.com/maoruiz24/portfolio (rama `main`)
 - Dominio: **https://iruiz.dev** (`siteConfig.url` en [src/lib/site.ts](src/lib/site.ts))
@@ -77,7 +77,7 @@ tmp/                      # Notas locales (brief de Nology). En .gitignore — n
 - El TMS/SaaS logístico propio está **pausado**: aparece como "Multi-Tenant Logistics SaaS Prototype" (status Paused) en Architecture & R&D, distinguiendo implementado / prototipo / diseñado / planeado.
 - Nology: se puede nombrar DeliverySuite (producto público en las tiendas). Nada de clientes, URLs internas ni código.
 - El teléfono solo aparece en `/resume` y el PDF; en el resto del sitio solo email/LinkedIn/GitHub.
-- Posicionamiento: ingeniero senior de backend/SaaS/mobile con IA como diferenciador (Claude Code y Codex, agentes, MCP, RAG, human-in-the-loop). No posicionarlo como investigador de ML ni ingeniero de infraestructura.
+- Posicionamiento: ingeniero **full-stack** senior — frontend (React, React Native), backend (.NET, Node, SQL) y CI/CD — con IA como diferenciador (Claude Code y Codex a diario en Nology y en sus proyectos, agentes, MCP, RAG, human-in-the-loop). No posicionarlo como solo backend, investigador de ML ni ingeniero de infraestructura.
 - Casos de estudio principales (Driver, API modernization, HelloTCF, WMS, FarmilyGo) llevan: features, problem, responsibilities, architecture (diagrama por capas), decisions con trade-off, challenges, approach, impact, stack, learning. Orden de la home en `homeProjectSlugs`.
 - Slugs renombrados se redirigen en `next.config.ts` (`renamedProjects`); si renombras otro, añádelo ahí.
 

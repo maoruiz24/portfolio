@@ -18,8 +18,16 @@ export const metadata: Metadata = {
 
 const skillLines: { label: string; value: string }[] = [
     {
+        label: "Frontend & Mobile",
+        value: "React, React Native, Expo/EAS, JavaScript, TypeScript, Redux Toolkit, jQuery/DevExtreme, Xamarin (earlier career)",
+    },
+    {
         label: "Backend",
         value: "C#, .NET / .NET 10, ASP.NET Core Web API, Node.js, TypeScript, REST APIs, SQL stored procedures, Java (earlier career)",
+    },
+    {
+        label: "Cloud & Delivery",
+        value: "CI/CD with Azure DevOps and Expo EAS (builds and App Store / Google Play releases), Git, Docker, Kubernetes, Azure, AWS, Firebase; testing with xUnit and Jest",
     },
     {
         label: "Architecture",
@@ -28,14 +36,6 @@ const skillLines: { label: string; value: string }[] = [
     {
         label: "Data",
         value: "SQL Server (T-SQL, query and index optimization, transactions, data integrity), Oracle, MongoDB, SQLite",
-    },
-    {
-        label: "Frontend & Mobile",
-        value: "React, React Native, Expo/EAS, JavaScript, TypeScript, Redux Toolkit, jQuery/DevExtreme, Xamarin (earlier career)",
-    },
-    {
-        label: "Cloud & Delivery",
-        value: "Azure, AWS, Docker, Kubernetes, Git, Azure DevOps, CI/CD, Expo EAS, Firebase; testing with xUnit and Jest",
     },
     {
         label: "AI Engineering",

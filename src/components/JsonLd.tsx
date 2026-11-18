@@ -17,6 +17,9 @@ export default function JsonLd() {
         sameAs: [siteConfig.links.linkedin, siteConfig.links.github],
         description: siteConfig.seo.description,
         knowsAbout: [
+            "Full-stack development",
+            "React",
+            "Next.js",
             "Backend engineering",
             ".NET",
             "C#",
@@ -26,6 +29,8 @@ export default function JsonLd() {
             "Multi-tenant architecture",
             "Legacy system modernization",
             "React Native",
+            "CI/CD",
+            "Azure DevOps",
             "AI-assisted software engineering",
             "Claude Code",
             "Model Context Protocol",

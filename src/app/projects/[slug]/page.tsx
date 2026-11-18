@@ -1,168 +1,172 @@
-import { notFound } from "next/navigation";
-import { projects } from "@/lib/data/projects";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import SectionHeading from "@/components/SectionHeading";
-import { ArrowLeft, Calendar, Tag, Layers, Database, Zap, Lightbulb, Briefcase } from "lucide-react";
+import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
-import { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { ArrowLeft, ArrowRight, CheckCircle2, Sparkles } from "lucide-react";
+import FlowDiagram from "@/components/FlowDiagram";
+import ProjectCard from "@/components/ProjectCard";
+import Reveal from "@/components/Reveal";
+import { Button } from "@/components/ui/button";
+import { groupLabels, projects } from "@/lib/data/projects";
 
-export async function generateStaticParams() {
-    return projects.map((project) => ({
-        slug: project.slug,
-    }));
+type Props = { params: Promise<{ slug: string }> };
+
+export function generateStaticParams() {
+    return projects.map((project) => ({ slug: project.slug }));
 }
 
-export async function generateMetadata(props: { params: Promise<{ slug: string }> }): Promise<Metadata> {
-    const params = await props.params;
-    const project = projects.find((p) => p.slug === params.slug);
-    if (!project) return { title: "Project Not Found" };
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+    const { slug } = await params;
+    const project = projects.find((p) => p.slug === slug);
+    if (!project) return { title: "Project not found" };
 
     return {
         title: project.title,
-        description: project.description,
+        description: project.summary,
+        alternates: { canonical: "/projects/" + project.slug },
+        openGraph: { title: project.title, description: project.tagline },
     };
 }
 
-export default async function ProjectDetailPage(props: { params: Promise<{ slug: string }> }) {
-    const params = await props.params;
-    const project = projects.find((p) => p.slug === params.slug);
+export default async function ProjectDetailPage({ params }: Props) {
+    const { slug } = await params;
+    const index = projects.findIndex((p) => p.slug === slug);
+    if (index === -1) notFound();
 
-    if (!project) {
-        notFound();
-    }
+    const project = projects[index];
+    const next = projects[(index + 1) % projects.length];
+    const related = projects
+        .filter((p) => p.slug !== project.slug && (p.group === project.group || (project.ai && p.ai)))
+        .slice(0, 2);
 
     return (
-        <div className="container mx-auto px-4 md:px-8 py-24">
-            <Link
-                href="/projects"
-                className="inline-flex items-center text-muted-foreground hover:text-primary transition-colors mb-12 group"
-            >
-                <ArrowLeft className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1" />
-                Back to projects
-            </Link>
-
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-16">
-                <div className="lg:col-span-2 space-y-12">
-                    {/* Header */}
-                    <section>
-                        <div className="flex flex-wrap gap-2 mb-6">
-                            <Badge variant="secondary" className="bg-primary/10 text-primary">{project.category}</Badge>
-                            <Badge variant="outline">{project.year}</Badge>
-                        </div>
-                        <h1 className="text-4xl md:text-6xl font-bold font-display tracking-tight mb-6">
-                            {project.title}
-                        </h1>
-                        <p className="text-xl text-muted-foreground leading-relaxed">
-                            {project.longDescription}
-                        </p>
-                    </section>
-
-                    {/* Featured Image */}
-                    <div className="aspect-video relative rounded-3xl overflow-hidden bg-gradient-to-br from-primary/10 to-purple-500/10 border border-muted/20">
-                        <div className="absolute inset-0 flex items-center justify-center text-primary/20 font-bold text-4xl">
-                            PROJECT SHOWCASE
-                        </div>
-                        {/* 
-             <Image 
-                src={project.image} 
-                alt={project.title} 
-                fill 
-                className="object-cover"
-             />
-             */}
+        <article className="pb-24">
+            <header className="relative overflow-hidden border-b border-border/60">
+                <div aria-hidden className="bg-grid pointer-events-none absolute inset-0 [mask-image:radial-gradient(ellipse_at_top,black_20%,transparent_70%)]" />
+                <div className="container-page relative py-12 md:py-20">
+                    <Link
+                        href="/projects"
+                        className="group mb-10 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-primary"
+                    >
+                        <ArrowLeft className="size-4 transition-transform group-hover:-translate-x-1" />
+                        All projects
+                    </Link>
+                    <div className="mb-5 flex flex-wrap items-center gap-2 font-mono text-xs text-muted-foreground">
+                        <span>{project.org}</span>
+                        <span aria-hidden>·</span>
+                        <span>{project.period}</span>
+                        <span className="rounded-full border border-border px-2 py-0.5">{groupLabels[project.group]}</span>
+                        {project.ai && (
+                            <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-2 py-0.5 text-primary">
+                                <Sparkles className="size-3" /> AI
+                            </span>
+                        )}
+                        {project.status && (
+                            <span className="rounded-full bg-signal/15 px-2 py-0.5 text-signal">{project.status}</span>
+                        )}
                     </div>
+                    <h1 className="max-w-4xl font-display text-4xl font-bold leading-tight tracking-tight text-balance md:text-6xl">
+                        {project.title}
+                    </h1>
+                    <p className="mt-6 max-w-3xl text-lg text-muted-foreground text-pretty md:text-xl">{project.summary}</p>
 
-                    {/* Details */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                        <div className="space-y-4">
-                            <h3 className="text-2xl font-bold flex items-center gap-2">
-                                <Layers className="h-6 w-6 text-primary" />
-                                The Problem
-                            </h3>
-                            <p className="text-muted-foreground leading-relaxed">
-                                {project.problem}
-                            </p>
-                        </div>
-                        <div className="space-y-4">
-                            <h3 className="text-2xl font-bold flex items-center gap-2">
-                                <Database className="h-6 w-6 text-primary" />
-                                Our Approach
-                            </h3>
-                            <p className="text-muted-foreground leading-relaxed">
-                                {project.approach}
-                            </p>
-                        </div>
-                        <div className="space-y-4">
-                            <h3 className="text-2xl font-bold flex items-center gap-2">
-                                <Zap className="h-6 w-6 text-primary" />
-                                Impact & Outcomes
-                            </h3>
-                            <p className="text-muted-foreground leading-relaxed">
-                                {project.impact}
-                            </p>
-                        </div>
-                        <div className="space-y-4">
-                            <h3 className="text-2xl font-bold flex items-center gap-2">
-                                <Lightbulb className="h-6 w-6 text-primary" />
-                                What I Learned
-                            </h3>
-                            <p className="text-muted-foreground leading-relaxed">
-                                {project.learning}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Sidebar */}
-                <div className="lg:col-span-1">
-                    <div className="sticky top-32 space-y-8">
-                        <div className="p-8 rounded-3xl bg-muted/30 border border-muted/50 space-y-6">
-                            <div>
-                                <h4 className="text-sm font-bold uppercase tracking-widest text-muted-foreground mb-4">Tech Stack</h4>
-                                <div className="flex flex-wrap gap-2">
-                                    {project.tags.map(tag => (
-                                        <Badge key={tag} variant="secondary" className="bg-background">{tag}</Badge>
-                                    ))}
+                    {project.metrics.length > 0 && (
+                        <dl className="mt-10 grid grid-cols-2 gap-6 border-t border-border pt-8 md:grid-cols-4">
+                            {project.metrics.map((m) => (
+                                <div key={m.label}>
+                                    <dt className="sr-only">{m.label}</dt>
+                                    <dd className="font-display text-3xl font-bold text-primary md:text-4xl">{m.value}</dd>
+                                    <dd className="mt-1 text-sm text-muted-foreground">{m.label}</dd>
                                 </div>
-                            </div>
-
-                            <div className="pt-6 border-t border-muted/50">
-                                <h4 className="text-sm font-bold uppercase tracking-widest text-muted-foreground mb-4">Role</h4>
-                                <p className="font-medium flex items-center gap-2">
-                                    <Briefcase className="h-4 w-4 text-primary" />
-                                    Senior Full-Stack Engineer
-                                </p>
-                            </div>
-
-                            <div className="pt-6 border-t border-muted/50">
-                                <h4 className="text-sm font-bold uppercase tracking-widest text-muted-foreground mb-4">Date</h4>
-                                <p className="font-medium flex items-center gap-2">
-                                    <Calendar className="h-4 w-4 text-primary" />
-                                    {project.year}
-                                </p>
-                            </div>
-
-                            <Button className="w-full h-12 text-lg" disabled>
-                                Live Demo Soon
-                            </Button>
-                        </div>
-
-                        <div className="p-8 rounded-3xl bg-primary/5 border border-primary/10 space-y-4">
-                            <h4 className="font-bold">Interested in the tech?</h4>
-                            <p className="text-sm text-muted-foreground">
-                                I'm happy to discuss the architecture and trade-offs of this project.
-                            </p>
-                            <Button asChild variant="link" className="p-0 h-auto">
-                                <Link href="/contact" className="flex items-center text-primary">
-                                    Get in touch <ArrowLeft className="ml-2 h-4 w-4 rotate-180" />
-                                </Link>
-                            </Button>
-                        </div>
-                    </div>
+                            ))}
+                        </dl>
+                    )}
                 </div>
+            </header>
+
+            <div className="container-page grid grid-cols-1 gap-12 pt-16 lg:grid-cols-[1fr_280px]">
+                <div className="min-w-0 space-y-14">
+                    {project.flow && (
+                        <Reveal>
+                            <FlowDiagram steps={project.flow} label="how it works" />
+                        </Reveal>
+                    )}
+
+                    <Reveal as="section" className="space-y-4">
+                        <h2 className="eyebrow">{"// the problem"}</h2>
+                        <p className="text-lg leading-relaxed text-foreground/90">{project.problem}</p>
+                    </Reveal>
+
+                    <Reveal as="section" className="space-y-5">
+                        <h2 className="eyebrow">{"// what I built"}</h2>
+                        <ol className="space-y-4">
+                            {project.approach.map((step, i) => (
+                                <li key={step} className="flex gap-4">
+                                    <span className="mt-0.5 font-mono text-sm text-primary">{String(i + 1).padStart(2, "0")}</span>
+                                    <span className="leading-relaxed text-muted-foreground">{step}</span>
+                                </li>
+                            ))}
+                        </ol>
+                    </Reveal>
+
+                    <Reveal as="section" className="space-y-5">
+                        <h2 className="eyebrow">{"// impact"}</h2>
+                        <ul className="space-y-3">
+                            {project.impact.map((item) => (
+                                <li key={item} className="flex gap-3">
+                                    <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-primary" />
+                                    <span className="leading-relaxed">{item}</span>
+                                </li>
+                            ))}
+                        </ul>
+                    </Reveal>
+
+                    <Reveal as="section" className="rounded-xl border border-primary/30 bg-primary/5 p-6">
+                        <h2 className="eyebrow mb-3">{"// what I learned"}</h2>
+                        <p className="text-lg leading-relaxed">{project.learning}</p>
+                    </Reveal>
+                </div>
+
+                <aside className="space-y-6 lg:sticky lg:top-24 lg:self-start">
+                    <div className="rounded-xl border border-border bg-card p-6">
+                        <h2 className="eyebrow mb-4">{"// stack"}</h2>
+                        <ul className="flex flex-wrap gap-1.5">
+                            {project.stack.map((tech) => (
+                                <li key={tech} className="rounded-md bg-muted px-2 py-1 font-mono text-xs text-muted-foreground">
+                                    {tech}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                    <div className="rounded-xl border border-border bg-card p-6">
+                        <p className="font-medium">Want the details?</p>
+                        <p className="mt-2 text-sm text-muted-foreground">
+                            I&apos;m happy to walk through the architecture and trade-offs in an interview.
+                        </p>
+                        <Button asChild className="mt-4 w-full">
+                            <Link href="/contact">Get in touch</Link>
+                        </Button>
+                    </div>
+                </aside>
             </div>
-        </div>
+
+            {related.length > 0 && (
+                <section className="container-page mt-24">
+                    <div className="mb-8 flex items-end justify-between gap-4">
+                        <h2 className="font-display text-2xl font-bold md:text-3xl">Related work</h2>
+                        <Link
+                            href={"/projects/" + next.slug}
+                            className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+                        >
+                            Next: {next.title} <ArrowRight className="size-4" />
+                        </Link>
+                    </div>
+                    <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                        {related.map((p) => (
+                            <ProjectCard key={p.slug} project={p} />
+                        ))}
+                    </div>
+                </section>
+            )}
+        </article>
     );
 }

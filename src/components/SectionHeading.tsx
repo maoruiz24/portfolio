@@ -1,44 +1,35 @@
-"use client";
-
-import { motion } from "framer-motion";
+import Reveal from "@/components/Reveal";
 import { cn } from "@/lib/utils";
-import { sectionReveal } from "@/lib/motion";
 
 interface SectionHeadingProps {
+    eyebrow?: string;
     title: string;
     subtitle?: string;
     className?: string;
     centered?: boolean;
+    as?: "h1" | "h2";
 }
 
-export default function SectionHeading({ title, subtitle, className, centered = false }: SectionHeadingProps) {
+export default function SectionHeading({
+    eyebrow,
+    title,
+    subtitle,
+    className,
+    centered = false,
+    as: Heading = "h2",
+}: SectionHeadingProps) {
     return (
-        <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={sectionReveal}
-            className={cn(
-                "mb-12 space-y-4",
-                centered && "text-center",
-                className
-            )}
-        >
-            <h2 className="text-3xl md:text-5xl font-bold font-display tracking-tight">
+        <Reveal className={cn("mb-12 max-w-3xl space-y-4", centered && "mx-auto text-center", className)}>
+            {eyebrow && <p className="eyebrow">{`// ${eyebrow}`}</p>}
+            <Heading
+                className={cn(
+                    "font-display font-bold tracking-tight text-balance",
+                    Heading === "h1" ? "text-4xl md:text-6xl" : "text-3xl md:text-5xl"
+                )}
+            >
                 {title}
-            </h2>
-            {subtitle && (
-                <p className={cn(
-                    "text-lg md:text-xl text-muted-foreground",
-                    centered && "max-w-2xl mx-auto"
-                )}>
-                    {subtitle}
-                </p>
-            )}
-            <div className={cn(
-                "h-1.5 w-20 bg-primary rounded-full",
-                centered && "mx-auto"
-            )} />
-        </motion.div>
+            </Heading>
+            {subtitle && <p className="text-lg text-muted-foreground text-pretty md:text-xl">{subtitle}</p>}
+        </Reveal>
     );
 }

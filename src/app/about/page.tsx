@@ -1,115 +1,132 @@
-"use client";
-
-import SectionHeading from "@/components/SectionHeading";
-import { siteConfig } from "@/lib/site";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, Code2, Heart, Rocket, Target, Users } from "lucide-react";
-import Image from "next/image";
+import { ArrowRight } from "lucide-react";
+import Reveal from "@/components/Reveal";
+import SectionHeading from "@/components/SectionHeading";
+import { Button } from "@/components/ui/button";
+import { siteConfig } from "@/lib/site";
+
+export const metadata: Metadata = {
+    title: "About",
+    description:
+        "Ivan Ruiz — a senior software engineer from Bogotá based in Mississauga, focused on AI engineering and agentic development on top of 17 years of production experience.",
+    alternates: { canonical: "/about" },
+};
+
+const chapters = [
+    {
+        years: "2009 – 2013",
+        title: "Leading delivery",
+        body: "At Indra I led the development team for Telefónica: 80+ production applications in .NET, Java and Oracle, a new QA function and a 35% reduction in development costs.",
+    },
+    {
+        years: "2013 – 2021",
+        title: "Building at scale",
+        body: "At ETB, Colombia's oldest telecom, I designed the CRM that lifted sales by 30% and a self-service platform for ~10,000 concurrent users, and helped move services to Kubernetes on Azure.",
+    },
+    {
+        years: "2022 – today",
+        title: "Owning a product",
+        body: "In Canada, at Nology Solutions, I became the lead developer of a multi-tenant logistics SaaS — web, mobile, API and database — shipping a store-published driver app and modernizing the platform to .NET 10.",
+    },
+    {
+        years: "2025 – today",
+        title: "Engineering with AI",
+        body: "I now build LLM systems with guardrails and run an agentic workflow — subagents, skills, MCP and persistent memory — both at work and in my R&D lab on a self-hosted Kubernetes cluster.",
+    },
+];
+
+const principles = [
+    { title: "Small, verifiable steps", body: "For people and for agents. Every step leaves an artifact: a spec, a test, a tracker row." },
+    { title: "Design for failure", body: "Networks drop, models hit quotas, data drifts. Fallbacks, retries and rollbacks are part of the feature." },
+    { title: "Humans approve, AI proposes", body: "LLMs draft and review; people own the decisions that matter, with full provenance." },
+    { title: "Measure, then optimize", body: "Profiling found a 14-second freeze was 500 browser layouts, not the server. Data beats guesses." },
+    { title: "Write decisions down", body: "ADRs, CLAUDE.md and AGENTS.md make knowledge reusable by every teammate — human or agent." },
+    { title: "Own it in production", body: "I run what I build, from store releases to my own k3s cluster." },
+];
 
 export default function AboutPage() {
     return (
-        <div className="container mx-auto px-4 md:px-8 py-24">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-                <div className="space-y-12">
+        <div className="container-page py-16 md:py-24">
+            <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1fr_320px]">
+                <div>
                     <SectionHeading
-                        title="End-to-end ownership. Scalable results."
-                        subtitle="I build systems that grow with your business, focusing on measurable outcomes and technical excellence."
+                        as="h1"
+                        eyebrow="about"
+                        title="Engineer first. AI multiplier second."
+                        subtitle="I'm Ivan — a software engineer from Bogotá, now in Mississauga. I care about systems that work on Monday morning, and lately about the AI agents that help me build them faster without lowering the bar."
                     />
-
-                    <div className="prose prose-invert prose-lg text-muted-foreground space-y-6">
+                    <Reveal className="max-w-3xl space-y-5 text-lg leading-relaxed text-muted-foreground">
                         <p>
-                            I'm Ivan Ruiz, a Senior Full-Stack Engineer based in Mississauga, Ontario. My career has been defined by a passion for solving complex architectural puzzles and delivering high-performance applications that serve thousands of users.
+                            I&apos;ve spent 17 years shipping software for telecom, logistics and enterprise clients: leading teams, designing
+                            platforms and, most recently, owning a production SaaS end to end — from SQL Server stored procedures to a React
+                            Native app in both app stores.
                         </p>
                         <p>
-                            Throughout my journey, I've developed a preference for <strong className="text-foreground">measurable outcomes</strong>. Whether it's reducing server costs through efficient cloud-native patterns or improving user satisfaction by 25% through a platform redesign, I believe engineering should always be tied to impact.
+                            Over the last year, AI changed how I work. I don&apos;t use it as autocomplete. I design{" "}
+                            <span className="text-foreground">processes for agents</span>: narrow subagents with explicit artifacts, skills
+                            that encode architecture rules, MCP connections to real systems and independent review before anything merges. On
+                            the product side, I build LLM features the way I build any production system — with schemas, fallbacks,
+                            observability and humans in the loop.
                         </p>
                         <p>
-                            Currently, I am deeply focused on <strong className="text-foreground">multi-tenant SaaS architectures</strong> and the integration of AI modules to drive operational efficiency. I enjoy the challenge of building isolated, secure, and cost-aware systems that can scale from an initial prototype to a robust enterprise solution.
+                            I&apos;m looking for a team where AI agents are central to the product or to the engineering process, and where
+                            17 years of production experience is an asset in making them reliable.
                         </p>
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                        <div className="space-y-4">
-                            <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center">
-                                <Target className="h-6 w-6 text-primary" />
-                            </div>
-                            <h4 className="font-bold text-xl">Impact Driven</h4>
-                            <p className="text-muted-foreground">Every line of code should move the needle. I focus on performance, reliability, and time-to-market.</p>
-                        </div>
-                        <div className="space-y-4">
-                            <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center">
-                                <Rocket className="h-6 w-6 text-primary" />
-                            </div>
-                            <h4 className="font-bold text-xl">Architecture First</h4>
-                            <p className="text-muted-foreground">Building the right foundation ensures scalability. I specialize in microservices and multi-tenant isolation.</p>
-                        </div>
-                        <div className="space-y-4">
-                            <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center">
-                                <Users className="h-6 w-6 text-primary" />
-                            </div>
-                            <h4 className="font-bold text-xl">Team Leadership</h4>
-                            <p className="text-muted-foreground">Experience leading and mentoring teams, establishing QA processes, and fostering a culture of excellence.</p>
-                        </div>
-                        <div className="space-y-4">
-                            <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center">
-                                <Heart className="h-6 w-6 text-primary" />
-                            </div>
-                            <h4 className="font-bold text-xl">Lifelong Learner</h4>
-                            <p className="text-muted-foreground">From homelab experiments to continuous learning and cloud-native engineering, I stay at the forefront of modern engineering.</p>
-                        </div>
-                    </div>
+                    </Reveal>
                 </div>
-
-                <div className="space-y-12">
-                    {/* Visual card or image placeholder */}
-                    <div className="relative aspect-[4/5] rounded-[2rem] overflow-hidden bg-gradient-to-tr from-primary/20 via-primary/5 to-purple-500/20 border border-primary/20 group">
-                        <div className="absolute inset-0 flex items-center justify-center">
-                            <Code2 className="h-48 w-48 text-primary/10 group-hover:scale-110 transition-transform duration-700" />
+                <Reveal delay={0.1} className="h-fit rounded-xl border border-border bg-card p-6 lg:sticky lg:top-24">
+                    <p className="eyebrow">{"// quick facts"}</p>
+                    <dl className="mt-5 space-y-4 text-sm">
+                        <div>
+                            <dt className="text-muted-foreground">Role</dt>
+                            <dd className="font-medium">{siteConfig.title}</dd>
                         </div>
-                        <div className="absolute bottom-12 left-12 right-12 glass p-8 rounded-2xl border-white/10 space-y-4">
-                            <h3 className="text-2xl font-bold">Ivan Ruiz</h3>
-                            <p className="text-muted-foreground">Senior Full-Stack Engineer</p>
-                            <div className="flex gap-4">
-                                <Badge variant="secondary" className="bg-primary/20 text-primary border-primary/20">C# / .NET</Badge>
-                                <Badge variant="secondary" className="bg-primary/20 text-primary border-primary/20">Node.js</Badge>
-                                <Badge variant="secondary" className="bg-primary/20 text-primary border-primary/20">Next.js</Badge>
-                            </div>
+                        <div>
+                            <dt className="text-muted-foreground">Based in</dt>
+                            <dd className="font-medium">{siteConfig.location}</dd>
                         </div>
-                    </div>
-
-                    <div className="bg-muted/30 p-8 rounded-3xl border border-muted/50">
-                        <h4 className="font-bold mb-4">Values I code by:</h4>
-                        <ul className="space-y-3">
-                            <li className="flex gap-3 text-muted-foreground">
-                                <div className="h-1.5 w-1.5 rounded-full bg-primary mt-2" />
-                                <span>Simplicity over complexity until complexity is necessary.</span>
-                            </li>
-                            <li className="flex gap-3 text-muted-foreground">
-                                <div className="h-1.5 w-1.5 rounded-full bg-primary mt-2" />
-                                <span>Security and performance are not features, they are requirements.</span>
-                            </li>
-                            <li className="flex gap-3 text-muted-foreground">
-                                <div className="h-1.5 w-1.5 rounded-full bg-primary mt-2" />
-                                <span>Documentation is as important as the implementation.</span>
-                            </li>
-                            <li className="flex gap-3 text-muted-foreground">
-                                <div className="h-1.5 w-1.5 rounded-full bg-primary mt-2" />
-                                <span>Automate the repetitive to focus on the creative.</span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div className="text-center lg:text-left">
-                        <Button asChild size="lg" className="h-14 px-10 text-lg">
-                            <Link href="/contact">
-                                Work with me <ArrowRight className="ml-2 h-5 w-5" />
-                            </Link>
-                        </Button>
-                    </div>
-                </div>
+                        <div>
+                            <dt className="text-muted-foreground">Languages</dt>
+                            <dd className="font-medium">English (advanced) · Spanish (native)</dd>
+                        </div>
+                        <div>
+                            <dt className="text-muted-foreground">Looking for</dt>
+                            <dd className="font-medium">Senior AI Engineer · Applied AI · Full-Stack AI</dd>
+                        </div>
+                    </dl>
+                    <Button asChild className="mt-6 w-full">
+                        <Link href="/contact">
+                            Contact me <ArrowRight className="size-4" />
+                        </Link>
+                    </Button>
+                </Reveal>
             </div>
+
+            <section className="mt-24">
+                <SectionHeading eyebrow="the path" title="Four chapters" />
+                <ol className="grid grid-cols-1 gap-5 md:grid-cols-2">
+                    {chapters.map((c, i) => (
+                        <Reveal as="li" key={c.title} delay={(i % 2) * 0.06} className="rounded-xl border border-border bg-card p-6">
+                            <p className="font-mono text-xs text-primary">{c.years}</p>
+                            <h3 className="mt-2 font-display text-xl font-bold">{c.title}</h3>
+                            <p className="mt-2 text-muted-foreground">{c.body}</p>
+                        </Reveal>
+                    ))}
+                </ol>
+            </section>
+
+            <section className="mt-24">
+                <SectionHeading eyebrow="principles" title="How I work" />
+                <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+                    {principles.map((p, i) => (
+                        <Reveal key={p.title} delay={(i % 3) * 0.06} className="rounded-xl border border-border p-6">
+                            <h3 className="font-display text-lg font-bold">{p.title}</h3>
+                            <p className="mt-2 text-sm text-muted-foreground">{p.body}</p>
+                        </Reveal>
+                    ))}
+                </div>
+            </section>
         </div>
     );
 }

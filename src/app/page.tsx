@@ -1,202 +1,203 @@
-"use client";
-
-import { motion } from "framer-motion";
-import Hero from "@/components/Hero";
-import SectionHeading from "@/components/SectionHeading";
-import SkillsGrid from "@/components/SkillsGrid";
-import ProjectCard from "@/components/ProjectCard";
-import { projects } from "@/lib/data/projects";
-import { experiences } from "@/lib/data/experience";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { ArrowRight, Code2, Database, Globe, Layers, Settings, Zap } from "lucide-react";
+import { ArrowRight, Bot, Boxes, Brain, ShieldCheck } from "lucide-react";
+import Hero from "@/components/Hero";
+import Reveal from "@/components/Reveal";
+import SectionHeading from "@/components/SectionHeading";
+import ProjectCard from "@/components/ProjectCard";
+import FlowDiagram from "@/components/FlowDiagram";
+import Timeline from "@/components/Timeline";
+import SkillsGrid from "@/components/SkillsGrid";
 import CopyEmailButton from "@/components/CopyEmailButton";
-import { staggerContainer, sectionReveal } from "@/lib/motion";
+import { Button } from "@/components/ui/button";
+import { experiences } from "@/lib/data/experience";
+import { projects } from "@/lib/data/projects";
+import { siteConfig } from "@/lib/site";
+
+const pillars = [
+    {
+        icon: Brain,
+        title: "AI engineering",
+        body: "LLM features that survive production: structured outputs validated by schemas, RAG over pgvector, multi-provider fallback with circuit breakers, LLM-as-judge review and human approval gates.",
+    },
+    {
+        icon: Bot,
+        title: "Agentic development",
+        body: "Custom subagents, skills, slash commands and MCP servers that turn Claude Code into a disciplined engineering team: spec-driven, test-backed and independently reviewed.",
+    },
+    {
+        icon: Boxes,
+        title: "Product engineering",
+        body: "17 years delivering web, mobile and backend systems end to end — .NET, React, React Native, Node, SQL — for logistics, telecom and enterprise clients.",
+    },
+    {
+        icon: ShieldCheck,
+        title: "Reliability by design",
+        body: "Offline-first sync, transactional data fixes with rollbacks, contract-preserving migrations and self-hosted Kubernetes. I ship things that keep working.",
+    },
+];
+
+const homeProjectSlugs = [
+    "ai-assisted-legacy-migration",
+    "llm-gateway-fallback",
+    "human-in-the-loop-content-pipeline",
+    "driver-app-offline-first",
+    "wms-modernization",
+    "homelab-k3s",
+];
+
+const workflow = projects.find((p) => p.slug === "agentic-engineering-workflow");
+const migration = projects.find((p) => p.slug === "ai-assisted-legacy-migration");
 
 export default function Home() {
-  const featuredProjects = projects.filter(p => p.featured).slice(0, 3);
-  const experienceHighlights = experiences.slice(0, 3);
+    const homeProjects = homeProjectSlugs
+        .map((slug) => projects.find((p) => p.slug === slug))
+        .filter((p) => p !== undefined);
 
-  return (
-    <div className="flex flex-col gap-24 pb-24">
-      {/* Hero Section */}
-      <Hero />
+    return (
+        <>
+            <Hero />
 
-      {/* About Section */}
-      <section id="about" className="container mx-auto px-4 md:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <SectionHeading
-            title="Senior Full-Stack AI Engineer with a product mindset."
-            subtitle="I specialize in building end-to-end systems that don't just work—they scale. My approach combines technical rigor with a focus on business impact and user experience."
-          />
-          <div className="space-y-6 text-lg text-muted-foreground">
-            <p>
-              With over 15 years of experience across startups and large enterprises, I've led development teams to ship complex platforms, from Colombian telecommunications infrastructure to modern Canadian SaaS solutions.
-            </p>
-            <p>
-              I believe in the power of clear architecture, measurable performance, and ownership. Whether it's optimizing a SQL query to save 35% in latency or architecting a multi-tenant microservices layer, I focus on delivering reliability and value.
-            </p>
-            <div className="flex flex-wrap gap-4 pt-4">
-              <div className="flex items-center gap-2 px-4 py-2 bg-muted/50 rounded-lg text-sm font-medium">
-                <Globe className="h-4 w-4 text-primary" /> End-to-End Delivery
-              </div>
-              <div className="flex items-center gap-2 px-4 py-2 bg-muted/50 rounded-lg text-sm font-medium">
-                <Layers className="h-4 w-4 text-primary" /> Cloud Native
-              </div>
-              <div className="flex items-center gap-2 px-4 py-2 bg-muted/50 rounded-lg text-sm font-medium">
-                <Zap className="h-4 w-4 text-primary" /> Performance-Focused
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+            {/* Proof strip */}
+            <section aria-label="Highlights" className="border-y border-border/60 bg-card/40">
+                <dl className="container-page grid grid-cols-2 gap-y-8 py-10 md:grid-cols-4">
+                    {siteConfig.stats.map((s, i) => (
+                        <Reveal key={s.label} delay={i * 0.06} className="px-2 text-center md:border-l md:border-border md:first:border-l-0">
+                            <dt className="sr-only">{s.label}</dt>
+                            <dd className="font-display text-3xl font-bold text-primary md:text-4xl">{s.value}</dd>
+                            <dd className="mt-1 text-sm text-muted-foreground">{s.label}</dd>
+                        </Reveal>
+                    ))}
+                </dl>
+            </section>
 
-      {/* Skills Section */}
-      <section className="container mx-auto px-4 md:px-8">
-        <SectionHeading
-          title="Technical Arsenal"
-          subtitle="A comprehensive stack focused on reliability, scale, and modern delivery."
-          centered
-        />
-        <SkillsGrid />
-      </section>
+            {/* What I bring */}
+            <section className="container-page py-24">
+                <SectionHeading
+                    eyebrow="what I bring"
+                    title="Senior engineering depth, applied to AI."
+                    subtitle="Most AI demos break in production. I combine 17 years of shipping real systems with hands-on LLM and agent engineering."
+                />
+                <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+                    {pillars.map((p, i) => (
+                        <Reveal key={p.title} delay={(i % 2) * 0.08} className="rounded-xl border border-border bg-card p-6">
+                            <p.icon className="size-6 text-primary" />
+                            <h3 className="mt-4 font-display text-xl font-bold">{p.title}</h3>
+                            <p className="mt-2 text-muted-foreground">{p.body}</p>
+                        </Reveal>
+                    ))}
+                </div>
+            </section>
 
-      {/* Current Focus Section */}
-      <section className="container mx-auto px-4 md:px-8 bg-primary/5 py-24 rounded-3xl border border-primary/10">
-        <div className="max-w-5xl mx-auto">
-          <div className="flex flex-col md:flex-row gap-12 items-start">
-            <div className="flex-1 space-y-6">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider">
-                <Settings className="h-3 w-3" /> Current Focus
-              </div>
-              <h2 className="text-3xl md:text-5xl font-bold font-display tracking-tight">
-                Multi-Tenant SaaS & AI Architecture
-              </h2>
-              <p className="text-xl text-muted-foreground leading-relaxed">
-                I'm currently architecting a high-scale logistics platform (TMS) with a focus on strict tenant isolation, subdomain routing, and AI-driven operational automation.
-              </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
-                <div className="p-4 rounded-xl bg-background border border-border/50">
-                  <h4 className="font-bold mb-1">Tenancy Isolation</h4>
-                  <p className="text-sm text-muted-foreground">Shared services vs tenant-scoped data boundaries using PostgreSQL schemas.</p>
+            {/* How I build with AI */}
+            <section className="relative border-y border-border/60 bg-card/30 py-24">
+                <div className="container-page">
+                    <SectionHeading
+                        eyebrow="how I build with AI"
+                        title="Agents with guardrails, not autocomplete."
+                        subtitle="I design the process the agents follow: narrow roles, explicit artifacts between steps, tests and independent review."
+                    />
+                    <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+                        {migration?.flow && (
+                            <Reveal className="space-y-4">
+                                <h3 className="font-display text-xl font-bold">At work: migrating a legacy backend</h3>
+                                <p className="text-muted-foreground">
+                                    A read-only analyst subagent inventories each legacy handler; a migrator ports one operation at a time into
+                                    .NET 10 CQRS with tests; a tracker keeps humans and agents in sync. SQL Server MCP and persistent memory give
+                                    the agents real context.
+                                </p>
+                                <FlowDiagram steps={migration.flow} label="migrate-legacy skill" />
+                                <Link href={"/projects/" + migration.slug} className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
+                                    Read the case study <ArrowRight className="size-4" />
+                                </Link>
+                            </Reveal>
+                        )}
+                        {workflow?.flow && (
+                            <Reveal delay={0.08} className="space-y-4">
+                                <h3 className="font-display text-xl font-bold">Everywhere: spec-driven development</h3>
+                                <p className="text-muted-foreground">
+                                    Each phase runs as its own subagent. A four-lens review panel plus a refuter challenges every change, two
+                                    blind judges gate critical ones, and Engram MCP gives agents durable memory across sessions.
+                                </p>
+                                <FlowDiagram steps={workflow.flow} label="sdd pipeline" />
+                                <Link href={"/projects/" + workflow.slug} className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
+                                    See the workflow <ArrowRight className="size-4" />
+                                </Link>
+                            </Reveal>
+                        )}
+                    </div>
                 </div>
-                <div className="p-4 rounded-xl bg-background border border-border/50">
-                  <h4 className="font-bold mb-1">Cost-Aware Scaling</h4>
-                  <p className="text-sm text-muted-foreground">Homelab-to-cloud transition strategy using Kubernetes and MinIO.</p>
-                </div>
-                <div className="p-4 rounded-xl bg-background border border-border/50">
-                  <h4 className="font-bold mb-1">AI Module (RAG)</h4>
-                  <p className="text-sm text-muted-foreground">Operational automation using vector embeddings and LLM assistants.</p>
-                </div>
-                <div className="p-4 rounded-xl bg-background border border-border/50">
-                  <h4 className="font-bold mb-1">Cloud Resilience</h4>
-                  <p className="text-sm text-muted-foreground">Microservices with RabbitMQ for decoupling and Redis for distributed caching.</p>
-                </div>
-              </div>
-              <Button asChild variant="outline" className="mt-6 group">
-                <Link href="/projects/multi-tenant-logistics-saas">
-                  Read Case Study <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </Link>
-              </Button>
-            </div>
-            <div className="flex-1 w-full aspect-square md:aspect-auto md:h-full min-h-[400px] bg-gradient-to-br from-primary/20 via-primary/5 to-purple-500/20 rounded-2xl border border-primary/20 flex items-center justify-center relative overflow-hidden">
-              <div className="absolute inset-0 flex items-center justify-center opacity-20">
-                <Database className="h-64 w-64 text-primary animate-pulse" />
-              </div>
-              <div className="relative z-10 p-8 glass rounded-xl border-white/20 shadow-2xl space-y-4 max-w-sm">
-                <div className="h-2 w-20 bg-primary rounded-full" />
-                <p className="text-sm font-mono text-primary/80 tracking-widest">ARCHITECTURE SNAPSHOT</p>
-                <div className="space-y-2">
-                  <div className="h-8 w-full bg-primary/20 rounded flex items-center px-3 text-[10px] font-mono">Next.js 15 App Router</div>
-                  <div className="h-8 w-full bg-primary/15 rounded flex items-center px-3 text-[10px] font-mono">API GATEWAY + IAM</div>
-                  <div className="h-8 w-full bg-primary/10 rounded flex items-center px-3 text-[10px] font-mono">TENANT-SCOPED SERVICES</div>
-                  <div className="h-8 w-full bg-primary/5 rounded flex items-center px-3 text-[10px] font-mono">PRISMA + PG MULTI-SCHEMA</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+            </section>
 
-      {/* Featured Projects Section */}
-      <section className="container mx-auto px-4 md:px-8">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
-          <SectionHeading
-            title="Featured Projects"
-            subtitle="Selected work from high-impact migrations to enterprise SaaS redesigns."
-            className="mb-0"
-          />
-          <Button asChild variant="ghost" className="group">
-            <Link href="/projects">
-              View All Work <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </Link>
-          </Button>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {featuredProjects.map((project) => (
-            <ProjectCard key={project.slug} project={project} />
-          ))}
-        </div>
-      </section>
-
-      {/* Experience Highlights */}
-      <section className="container mx-auto px-4 md:px-8">
-        <SectionHeading
-          title="Career Journey"
-          subtitle="Helping companies scale through engineering excellence."
-          centered
-        />
-        <div className="max-w-4xl mx-auto space-y-8">
-          {experienceHighlights.map((exp, i) => (
-            <motion.div
-              key={exp.company}
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="group p-6 rounded-2xl border border-muted/50 hover:border-primary/30 transition-all bg-card/50"
-            >
-              <div className="flex flex-col sm:flex-row justify-between sm:items-center mb-4 gap-2">
-                <div>
-                  <h3 className="text-xl font-bold group-hover:text-primary transition-colors">{exp.role}</h3>
-                  <p className="text-muted-foreground">{exp.company} • {exp.period}</p>
+            {/* Selected work */}
+            <section className="container-page py-24">
+                <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+                    <SectionHeading
+                        eyebrow="selected work"
+                        title="Case studies"
+                        subtitle="Production systems at Nology Solutions and AI engineering from my personal R&D lab."
+                        className="mb-0"
+                    />
+                    <Button variant="outline" asChild className="self-start md:self-auto">
+                        <Link href="/projects">
+                            All {projects.length} projects <ArrowRight className="size-4" />
+                        </Link>
+                    </Button>
                 </div>
-                <div className="text-sm font-medium px-3 py-1 bg-primary/5 text-primary rounded-full border border-primary/10">
-                  {exp.location}
-                </div>
-              </div>
-              <p className="text-muted-foreground line-clamp-2 italic mb-4">
-                &quot;{exp.impact}&quot;
-              </p>
-              <Button asChild variant="link" className="p-0 h-auto group-hover:text-primary">
-                <Link href="/experience" className="flex items-center">
-                  See full details <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-            </motion.div>
-          ))}
-          <div className="text-center pt-8">
-            <Button asChild size="lg" variant="outline">
-              <Link href="/experience">View Full Timeline</Link>
-            </Button>
-          </div>
-        </div>
-      </section>
+                <ul className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+                    {homeProjects.map((project, i) => (
+                        <Reveal as="li" key={project.slug} delay={(i % 3) * 0.06}>
+                            <ProjectCard project={project} />
+                        </Reveal>
+                    ))}
+                </ul>
+            </section>
 
-      {/* Contact CTA */}
-      <section className="container mx-auto px-4 md:px-8">
-        <div className="max-w-4xl mx-auto rounded-3xl p-8 md:p-16 text-center space-y-8 relative overflow-hidden border border-primary/20 bg-gradient-to-br from-primary/10 to-transparent">
-          <SectionHeading
-            title="Let's build something exceptional."
-            subtitle="I'm always open to discussing new opportunities, technical challenges, or architecture reviews."
-            centered
-            className="mb-0"
-          />
-          <div className="flex justify-center">
-            <CopyEmailButton />
-          </div>
-        </div>
-      </section>
-    </div>
-  );
+            {/* Experience */}
+            <section className="border-y border-border/60 bg-card/30 py-24">
+                <div className="container-page">
+                    <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+                        <SectionHeading eyebrow="experience" title="17 years, three companies, one constant: shipping." className="mb-0" />
+                        <Button variant="outline" asChild className="self-start md:self-auto">
+                            <Link href="/experience">
+                                Full experience <ArrowRight className="size-4" />
+                            </Link>
+                        </Button>
+                    </div>
+                    <div className="mt-12">
+                        <Timeline items={experiences} compact />
+                    </div>
+                </div>
+            </section>
+
+            {/* Skills */}
+            <section className="container-page py-24">
+                <SectionHeading
+                    eyebrow="toolbox"
+                    title="Skills, with receipts."
+                    subtitle="Every group links back to something I built and shipped."
+                />
+                <SkillsGrid />
+            </section>
+
+            {/* CTA */}
+            <section className="container-page pb-24">
+                <Reveal className="relative overflow-hidden rounded-2xl border border-primary/30 bg-card p-8 text-center md:p-14">
+                    <div aria-hidden className="pointer-events-none absolute -top-24 left-1/2 h-64 w-[600px] -translate-x-1/2 rounded-full bg-primary/20 blur-[100px]" />
+                    <p className="eyebrow relative">{"// let's talk"}</p>
+                    <h2 className="relative mt-4 font-display text-3xl font-bold tracking-tight text-balance md:text-5xl">
+                        Building AI into your product or your engineering process?
+                    </h2>
+                    <p className="relative mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">{siteConfig.availability}.</p>
+                    <div className="relative mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+                        <Button size="lg" asChild>
+                            <Link href="/contact">
+                                Get in touch <ArrowRight className="size-4" />
+                            </Link>
+                        </Button>
+                        <CopyEmailButton />
+                    </div>
+                </Reveal>
+            </section>
+        </>
+    );
 }

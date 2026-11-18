@@ -1,81 +1,70 @@
-"use client";
-
+import type { Metadata } from "next";
+import { Download, GraduationCap, Languages } from "lucide-react";
+import Reveal from "@/components/Reveal";
 import SectionHeading from "@/components/SectionHeading";
 import Timeline from "@/components/Timeline";
+import { Button } from "@/components/ui/button";
 import { experiences } from "@/lib/data/experience";
 import { siteConfig } from "@/lib/site";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
-import { Layers, Zap, Database, Globe, Shield, Terminal } from "lucide-react";
 
-const competencies = [
-    { icon: Globe, label: "Full-Stack Delivery" },
-    { icon: Zap, label: "Performance Tuning" },
-    { icon: Database, label: "Scalable APIs" },
-    { icon: Layers, label: "Cloud Readiness" },
-    { icon: Shield, label: "Multi-tenant Design" },
-    { icon: Terminal, label: "Team Leadership" },
-];
+export const metadata: Metadata = {
+    title: "Experience",
+    description:
+        "17 years of professional experience: Senior Software Developer at Nology Solutions, Senior Software Engineer at ETB and Technical Leader at Indra.",
+    alternates: { canonical: "/experience" },
+};
 
 export default function ExperiencePage() {
     return (
-        <div className="container mx-auto px-4 md:px-8 py-24">
-            <SectionHeading
-                title="Experience"
-                subtitle="A snapshot of my professional journey and the impact I've made across different industries."
-            />
-
-            {/* Competencies Summary */}
-            <div className="mb-24">
-                <h3 className="text-xl font-bold mb-8 flex items-center gap-2">
-                    <Terminal className="h-5 w-5 text-primary" />
-                    Core Competencies
-                </h3>
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-                    {competencies.map((item) => (
-                        <Card key={item.label} className="bg-card/50 border-muted/50 hover:border-primary/30 transition-colors py-6 text-center">
-                            <CardContent className="p-0 space-y-3">
-                                <div className="mx-auto w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center">
-                                    <item.icon className="h-6 w-6 text-primary" />
-                                </div>
-                                <p className="text-sm font-bold tracking-tight">{item.label}</p>
-                            </CardContent>
-                        </Card>
-                    ))}
-                </div>
+        <div className="container-page py-16 md:py-24">
+            <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+                <SectionHeading
+                    as="h1"
+                    eyebrow="experience"
+                    title="17 years of shipping"
+                    subtitle="From leading a delivery team for Telefónica to owning a logistics SaaS end to end — and bringing AI agents into how it gets built."
+                    className="mb-0"
+                />
+                <Button variant="outline" asChild className="self-start md:self-auto">
+                    <a href={siteConfig.resumePdf} download>
+                        <Download className="size-4" /> Résumé (PDF)
+                    </a>
+                </Button>
             </div>
 
-            {/* Timeline */}
-            <Timeline experiences={experiences} />
+            <div className="mt-16">
+                <Timeline items={experiences} />
+            </div>
 
-            {/* Education Section */}
-            <div className="mt-32">
-                <SectionHeading
-                    title="Education"
-                    subtitle="Foundations in engineering and management."
-                />
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <Card className="bg-card/50 border-muted/50 p-6">
-                        <div className="flex justify-between items-start mb-4">
-                            <div>
-                                <h3 className="text-xl font-bold">Specialization in Project Management</h3>
-                                <p className="text-muted-foreground">Universidad EAN</p>
-                            </div>
-                            <Badge variant="secondary">2016</Badge>
-                        </div>
-                        <p className="text-sm text-muted-foreground">Focused on software delivery lifecycles, resource optimization, and strategic alignment.</p>
-                    </Card>
-                    <Card className="bg-card/50 border-muted/50 p-6">
-                        <div className="flex justify-between items-start mb-4">
-                            <div>
-                                <h3 className="text-xl font-bold">BSc Systems Engineering</h3>
-                                <p className="text-muted-foreground">Universidad Central</p>
-                            </div>
-                            <Badge variant="secondary">2013</Badge>
-                        </div>
-                        <p className="text-sm text-muted-foreground">Core computer science foundations, algorithms, data structures, and software architecture.</p>
-                    </Card>
-                </div>
+            <div className="mt-24 grid grid-cols-1 gap-6 md:grid-cols-2">
+                <Reveal className="rounded-xl border border-border bg-card p-6">
+                    <h2 className="flex items-center gap-2 font-display text-xl font-bold">
+                        <GraduationCap className="size-5 text-primary" /> Education
+                    </h2>
+                    <ul className="mt-5 space-y-4">
+                        {siteConfig.education.map((e) => (
+                            <li key={e.degree}>
+                                <p className="font-medium">{e.degree}</p>
+                                <p className="text-sm text-muted-foreground">
+                                    {e.school} · {e.location} · {e.year}
+                                </p>
+                            </li>
+                        ))}
+                    </ul>
+                </Reveal>
+                <Reveal delay={0.06} className="rounded-xl border border-border bg-card p-6">
+                    <h2 className="flex items-center gap-2 font-display text-xl font-bold">
+                        <Languages className="size-5 text-primary" /> Languages
+                    </h2>
+                    <ul className="mt-5 space-y-4">
+                        {siteConfig.languages.map((l) => (
+                            <li key={l.name}>
+                                <p className="font-medium">{l.name}</p>
+                                <p className="text-sm text-muted-foreground">{l.level}</p>
+                            </li>
+                        ))}
+                    </ul>
+                </Reveal>
             </div>
         </div>
     );

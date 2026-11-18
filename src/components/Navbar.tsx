@@ -1,102 +1,140 @@
 "use client";
 
-import * as React from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
-import { Menu, X, Github, Linkedin, Mail } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { Download, Menu } from "lucide-react";
+import { Github, Linkedin } from "@/components/brand-icons";
+import ThemeToggle from "@/components/ThemeToggle";
 import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { siteConfig } from "@/lib/site";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { cn } from "@/lib/utils";
 
 const navItems = [
-    { name: "Home", href: "/" },
-    { name: "Projects", href: "/projects" },
+    { name: "Work", href: "/projects" },
     { name: "Experience", href: "/experience" },
     { name: "About", href: "/about" },
+    { name: "Résumé", href: "/resume" },
     { name: "Contact", href: "/contact" },
 ];
 
+function isActive(pathname: string, href: string) {
+    if (href === "/") return pathname === "/";
+    return pathname === href || pathname.startsWith(href + "/");
+}
+
 export default function Navbar() {
     const pathname = usePathname();
-    const [isOpen, setIsOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
 
     return (
-        <header className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-md">
-            <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-8">
-                <Link href="/" className="flex items-center space-x-2">
-                    <span className="text-xl font-bold font-display tracking-tight hover:text-primary transition-colors">
-                        {siteConfig.name}
+        <header className="sticky top-0 z-50 w-full border-b border-border/60 bg-background/75 backdrop-blur-md print:hidden">
+            <div className="container-page flex h-16 items-center justify-between">
+                <Link href="/" className="group flex items-center gap-2 font-mono text-sm" aria-label={siteConfig.name + " — home"}>
+                    <span className="flex size-8 items-center justify-center rounded-md bg-primary font-bold text-primary-foreground">
+                        IR
+                    </span>
+                    <span className="text-muted-foreground transition-colors group-hover:text-foreground">
+                        {siteConfig.shortName}
+                        <span className="text-primary">.dev</span>
                     </span>
                 </Link>
 
-                {/* Desktop Nav */}
-                <nav className="hidden md:flex items-center space-x-8">
-                    {navItems.map((item) => (
-                        <Link
-                            key={item.href}
-                            href={item.href}
-                            className={cn(
-                                "text-sm font-medium transition-colors hover:text-primary relative py-1",
-                                pathname === item.href ? "text-primary" : "text-muted-foreground"
-                            )}
-                        >
-                            {item.name}
-                            {pathname === item.href && (
-                                <motion.div
-                                    layoutId="nav-underline"
-                                    className="absolute bottom-0 left-0 h-0.5 w-full bg-primary"
-                                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                                />
-                            )}
-                        </Link>
-                    ))}
-                    <div className="flex items-center space-x-4 ml-4 border-l pl-8">
-                        <a href={siteConfig.links.github} target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-primary">
-                            <Github className="h-5 w-5" />
-                        </a>
-                        <a href={siteConfig.links.linkedin} target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-primary">
-                            <Linkedin className="h-5 w-5" />
-                        </a>
-                    </div>
+                <nav aria-label="Main" className="hidden items-center gap-1 md:flex">
+                    {navItems.map((item) => {
+                        const active = isActive(pathname, item.href);
+                        return (
+                            <Link
+                                key={item.href}
+                                href={item.href}
+                                aria-current={active ? "page" : undefined}
+                                className={cn(
+                                    "relative rounded-md px-3 py-2 text-sm font-medium transition-colors hover:text-foreground",
+                                    active ? "text-foreground" : "text-muted-foreground"
+                                )}
+                            >
+                                {active && (
+                                    <motion.span
+                                        layoutId="nav-pill"
+                                        className="absolute inset-0 -z-10 rounded-md bg-muted"
+                                        transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                                    />
+                                )}
+                                {item.name}
+                            </Link>
+                        );
+                    })}
                 </nav>
 
-                {/* Mobile Nav */}
-                <div className="md:hidden">
-                    <Sheet open={isOpen} onOpenChange={setIsOpen}>
+                <div className="hidden items-center gap-1 md:flex">
+                    <Button variant="ghost" size="icon" asChild>
+                        <a href={siteConfig.links.github} target="_blank" rel="noreferrer" aria-label="GitHub">
+                            <Github className="size-5" />
+                        </a>
+                    </Button>
+                    <Button variant="ghost" size="icon" asChild>
+                        <a href={siteConfig.links.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn">
+                            <Linkedin className="size-5" />
+                        </a>
+                    </Button>
+                    <ThemeToggle />
+                    <Button size="sm" className="ml-2" asChild>
+                        <a href={siteConfig.resumePdf} download>
+                            <Download className="size-4" />
+                            Résumé
+                        </a>
+                    </Button>
+                </div>
+
+                <div className="flex items-center gap-1 md:hidden">
+                    <ThemeToggle />
+                    <Sheet open={open} onOpenChange={setOpen}>
                         <SheetTrigger asChild>
-                            <Button variant="ghost" size="icon" className="md:hidden">
-                                <Menu className="h-6 w-6" />
-                                <span className="sr-only">Toggle menu</span>
+                            <Button variant="ghost" size="icon" aria-label="Open menu">
+                                <Menu className="size-6" />
                             </Button>
                         </SheetTrigger>
-                        <SheetContent side="right" className="flex flex-col">
-                            <div className="flex flex-col space-y-6 mt-12">
-                                {navItems.map((item) => (
+                        <SheetContent side="right" className="flex flex-col gap-0 p-6">
+                            <SheetTitle className="font-mono text-sm text-muted-foreground">
+                                {siteConfig.shortName}
+                                <span className="text-primary">.dev</span>
+                            </SheetTitle>
+                            <nav aria-label="Mobile" className="mt-10 flex flex-col gap-2">
+                                {[{ name: "Home", href: "/" }, ...navItems].map((item) => (
                                     <Link
                                         key={item.href}
                                         href={item.href}
-                                        onClick={() => setIsOpen(false)}
+                                        onClick={() => setOpen(false)}
                                         className={cn(
-                                            "text-lg font-medium transition-colors hover:text-primary",
-                                            pathname === item.href ? "text-primary" : "text-muted-foreground"
+                                            "rounded-md px-3 py-2 text-lg font-medium transition-colors hover:bg-muted",
+                                            isActive(pathname, item.href) ? "text-primary" : "text-muted-foreground"
                                         )}
                                     >
                                         {item.name}
                                     </Link>
                                 ))}
-                            </div>
-                            <div className="flex items-center space-x-6 mt-auto pb-8">
-                                <a href={siteConfig.links.github} target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-primary">
-                                    <Github className="h-6 w-6" />
-                                </a>
-                                <a href={siteConfig.links.linkedin} target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-primary">
-                                    <Linkedin className="h-6 w-6" />
-                                </a>
-                                <a href={siteConfig.links.email} className="text-muted-foreground hover:text-primary">
-                                    <Mail className="h-6 w-6" />
-                                </a>
+                            </nav>
+                            <div className="mt-auto space-y-4">
+                                <Button className="w-full" asChild>
+                                    <a href={siteConfig.resumePdf} download>
+                                        <Download className="size-4" />
+                                        Download résumé
+                                    </a>
+                                </Button>
+                                <div className="flex justify-center gap-2">
+                                    <Button variant="ghost" size="icon" asChild>
+                                        <a href={siteConfig.links.github} target="_blank" rel="noreferrer" aria-label="GitHub">
+                                            <Github className="size-5" />
+                                        </a>
+                                    </Button>
+                                    <Button variant="ghost" size="icon" asChild>
+                                        <a href={siteConfig.links.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn">
+                                            <Linkedin className="size-5" />
+                                        </a>
+                                    </Button>
+                                </div>
                             </div>
                         </SheetContent>
                     </Sheet>

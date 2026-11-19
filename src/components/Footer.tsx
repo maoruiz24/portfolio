@@ -14,7 +14,7 @@ const links = [
 export default function Footer() {
     return (
         <footer className="border-t border-border/60 print:hidden">
-            <div className="container-page flex flex-col gap-8 py-12 md:flex-row md:items-start md:justify-between">
+            <div className="container-page flex flex-col gap-6 py-8 md:flex-row md:items-start md:justify-between md:py-12">
                 <div className="max-w-sm space-y-3">
                     <p className="font-display text-lg font-bold">{siteConfig.name}</p>
                     <p className="text-sm text-muted-foreground">
@@ -40,9 +40,9 @@ export default function Footer() {
                     </a>
                 </div>
             </div>
-            <div className="container-page flex flex-col justify-between gap-2 border-t border-border/60 py-6 font-mono text-xs text-muted-foreground md:flex-row">
+            <div className="container-page flex flex-col justify-between gap-2 border-t border-border/60 py-5 font-mono text-xs text-muted-foreground md:flex-row">
                 <p>© {new Date().getFullYear()} {siteConfig.name}</p>
-                <p>Next.js 16 · self-hosted on k3s · built with Claude Code &amp; Codex</p>
+                <p>Next.js · self-hosted on my own k3s cluster</p>
             </div>
         </footer>
     );

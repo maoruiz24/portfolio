@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-Portafolio personal de Ivan Ruiz — **Senior Full-Stack Engineer | Web, Mobile, Cloud & AI-Assisted Delivery** (hero: "From UI to database to deployment."). Es su herramienta principal de búsqueda de empleo (Senior Full-Stack / Software Engineer, también Backend y Senior SWE — Applied AI). Sitio estático con Next.js App Router, desplegado como contenedor Docker en su clúster k3s propio.
+Portafolio personal de Ivan Ruiz — **Senior Full-Stack Engineer | .NET · React · React Native · Node.js · SQL** (hero: "From interface to database to deployment."). Es su herramienta principal de búsqueda de empleo (Senior Full-Stack / Software Engineer, también Backend y Senior SWE — Applied AI). Sitio estático con Next.js App Router, desplegado como contenedor Docker en su clúster k3s propio.
 
 - Repo: https://github.com/maoruiz24/portfolio (rama `main`)
 - Dominio: **https://iruiz.dev** (`siteConfig.url` en [src/lib/site.ts](src/lib/site.ts))
@@ -51,7 +51,7 @@ src/
   components/
     ui/                   # shadcn/ui — generados; modificar con cuidado
     providers.tsx         # ThemeProvider (dark por defecto) + MotionConfig
-    Reveal.tsx            # Wrapper client de animación al entrar en viewport (permite páginas server)
+    Reveal.tsx            # Animación al entrar en viewport. Contenido VISIBLE por defecto en el HTML del servidor; solo oculta lo que empieza bajo el pliegue. Nunca volver a initial opacity:0 en SSR
     SectionHeading.tsx    # eyebrow "// texto" + título + subtítulo
     Hero, Navbar, Footer, ThemeToggle, ProjectCard, ProjectsExplorer, FlowDiagram, ArchitectureDiagram,
     Timeline, SkillsGrid, ContactForm, CopyEmailButton, PrintButton, JsonLd, brand-icons
@@ -73,12 +73,15 @@ tmp/                      # Notas locales (brief de Nology). En .gitignore — n
 - **Cero métricas inventadas.** Cada número debe venir del usuario o de evidencia verificable (git, tests, docs). Si falta, deja el texto sin número y pregunta.
 - **Permiso de trabajo:** el usuario tiene un permiso que solo le permite trabajar para Nology. Todo proyecto fuera de Nology se presenta como **"Personal R&D"** (categoría `product` o `rnd`). Se permiten URLs públicas (`url`: hellotcf.com, farmilygo.com), pero **nunca** precios, suscripciones, pagos, usuarios, ingresos ni lenguaje de negocio/freelance. No mencionar el estado migratorio en el sitio (lo trata en entrevistas).
 - **Nada que caduque con cada release:** no publicar números de versión, conteo de releases ni de upgrades de SDK (p. ej. "v1.7.6", "45 releases"). Usar formulaciones estables ("since 2023", "continuous releases") y cifras con "+" para contadores que crecen ("90+ tests", "1,250+ commits").
-- Métricas confirmadas por el usuario (Nov 2026): ~200 clientes empresariales del SaaS; 500–1,000 usuarios recurrentes de la Driver app; páginas críticas de ~12–18 s a 2–3 s. No mezclar clientes del SaaS con usuarios de la app.
+- Métricas confirmadas por el usuario (Nov 2026): ~200 clientes empresariales del SaaS (B2B2C: cada cliente tiene en promedio 10–30 usuarios propios y 80–1,200 clientes finales; no multiplicar para inventar totales); 500–1,000 usuarios recurrentes de la Driver app; páginas críticas de ~12–18 s a 2–3 s. No mezclar clientes del SaaS con usuarios de la app.
 - El TMS/SaaS logístico propio está **pausado**: aparece como "Multi-Tenant Logistics SaaS Prototype" (status Paused) en Architecture & R&D, distinguiendo implementado / prototipo / diseñado / planeado.
 - Nology: se puede nombrar DeliverySuite (producto público en las tiendas). Nada de clientes, URLs internas ni código.
 - El teléfono solo aparece en `/resume` y el PDF; en el resto del sitio solo email/LinkedIn/GitHub.
-- Posicionamiento: ingeniero **full-stack** senior — frontend (React, React Native), backend (.NET, Node, SQL) y CI/CD — con IA como diferenciador (Claude Code y Codex a diario en Nology y en sus proyectos, agentes, MCP, RAG, human-in-the-loop). No posicionarlo como solo backend, investigador de ML ni ingeniero de infraestructura.
-- Casos de estudio principales (Driver, API modernization, HelloTCF, WMS, FarmilyGo) llevan: features, problem, responsibilities, architecture (diagrama por capas), decisions con trade-off, challenges, approach, impact, stack, learning. Orden de la home en `homeProjectSlugs`.
+- Posicionamiento: ingeniero **full-stack** senior con capacidades transferibles (web y móvil, APIs, datos, arquitectura, rendimiento, confiabilidad, entrega). Prioridad del stack: .NET/C#, React/React Native, Node.js, SQL, CI/CD. Logística y telecom son evidencia, no el mensaje. La **IA es complementaria**: va después de experiencia y proyectos, y siempre separando "desarrollo asistido por IA" (Claude Code/Codex a diario) de "funcionalidades con LLM" (proyectos personales: RAG, fallbacks, salidas estructuradas, costos, revisión humana). No posicionarlo como solo backend, investigador de ML ni ingeniero de infraestructura.
+- Portada: hero → cifras → 3 casos (`homeProjectSlugs`: Driver, API modernization, HelloTCF) → capacidades → experiencia → skills → IA (breve) → CTA. Evitar repetir cifras entre secciones.
+- Casos de estudio principales llevan `overview` (product, role, problem, outcome y `status` delivered / inProgress / planned) además de features, problem, architecture, decisions, challenges, approach, impact, stack, learning. Evidencia pública en `links` (Driver: App Store y Google Play verificados).
+- **Sin métricas de actividad** (commits, número de modelos de datos, etc.). Contadores solo si explican complejidad o cobertura (tests, adaptadores de proveedores).
+- Redacción: "ship" con moderación; variar entre design, build, deliver, launch, deploy, maintain, operate. Evitar muletillas ("end to end", "scalable", "production-ready").
 - Slugs renombrados se redirigen en `next.config.ts` (`renamedProjects`); si renombras otro, añádelo ahí.
 
 ## Convenciones de UI
@@ -103,6 +106,6 @@ tmp/                      # Notas locales (brief de Nology). En .gitignore — n
 
 ## Pendientes conocidos
 
-- No hay imágenes/capturas de proyectos; las tarjetas son tipográficas (métricas + stack).
+- Capturas: campo opcional `gallery` (archivos en `public/projects/<slug>/`); la primera es la portada de la tarjeta. Solo capturas reales de proyectos personales con datos de prueba, sin información personal, sin precios ni cifras de negocio. Nunca capturas de Nology. Las portadas públicas de hellotcf.com y farmilygo.com NO sirven (muestran precios y cifras de demo).
 - El formulario de contacto envía con Resend vía Server Action (honeypot, tiempo mínimo y rate limit en memoria por réplica). Sin `RESEND_API_KEY` muestra un error con el email directo.
 - No hay tests automatizados; la verificación es typecheck + lint + build + revisión visual (capturas con Chrome headless; ojo: headless tiene ancho mínimo ~500px, para móvil real usar un iframe de 390px).

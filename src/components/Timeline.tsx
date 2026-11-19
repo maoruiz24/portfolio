@@ -5,13 +5,13 @@ import { cn } from "@/lib/utils";
 
 interface TimelineProps {
     items: Experience[];
-    /** Compact mode shows only the summary and the first bullets (home page). */
+    /** Compact mode (home page) shows the summary plus two bullets for the current role and one for earlier roles. */
     compact?: boolean;
 }
 
 export default function Timeline({ items, compact = false }: TimelineProps) {
     return (
-        <ol className="relative space-y-12 border-l border-border pl-6 md:pl-10">
+        <ol className="relative space-y-8 border-l border-border pl-6 md:space-y-12 md:pl-10">
             {items.map((exp, i) => (
                 <Reveal as="li" key={exp.company} delay={i * 0.05} className="relative">
                     <span
@@ -22,7 +22,7 @@ export default function Timeline({ items, compact = false }: TimelineProps) {
                         )}
                     />
                     <div className="flex flex-col gap-1 md:flex-row md:items-baseline md:justify-between">
-                        <h3 className="font-display text-xl font-bold md:text-2xl">
+                        <h3 className="font-display text-lg font-bold leading-snug md:text-2xl">
                             {exp.role} <span className="text-primary">@ {exp.company}</span>
                         </h3>
                         <p className="font-mono text-xs text-muted-foreground">{exp.period}</p>
@@ -31,11 +31,11 @@ export default function Timeline({ items, compact = false }: TimelineProps) {
                         <MapPin className="size-3.5" />
                         {exp.location}
                     </p>
-                    <p className="mt-4 max-w-3xl text-foreground/90">{exp.summary}</p>
+                    <p className="mt-3 max-w-3xl text-foreground/90">{exp.summary}</p>
                     {!compact && <p className="mt-2 max-w-3xl text-sm italic text-muted-foreground">{exp.context}</p>}
 
-                    <ul className="mt-5 max-w-3xl space-y-2.5">
-                        {(compact ? exp.bullets.slice(0, 3) : exp.bullets).map((b) => (
+                    <ul className="mt-3 max-w-3xl space-y-2 md:mt-4">
+                        {(compact ? exp.bullets.slice(0, i === 0 ? 2 : 1) : exp.bullets).map((b) => (
                             <li key={b} className="flex gap-3 text-muted-foreground">
                                 <span aria-hidden className="mt-2.5 h-px w-3 shrink-0 bg-primary" />
                                 <span>{b}</span>
@@ -44,7 +44,7 @@ export default function Timeline({ items, compact = false }: TimelineProps) {
                     </ul>
 
                     {!compact && (
-                        <ul className="mt-5 flex flex-wrap gap-1.5" aria-label="Tech stack">
+                        <ul className="mt-4 flex flex-wrap gap-1.5" aria-label="Tech stack">
                             {exp.stack.map((tech) => (
                                 <li key={tech} className="rounded-md bg-muted px-2 py-0.5 font-mono text-[11px] text-muted-foreground">
                                     {tech}

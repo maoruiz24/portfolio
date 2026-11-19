@@ -18,18 +18,23 @@ export default function SectionHeading({
     centered = false,
     as: Heading = "h2",
 }: SectionHeadingProps) {
-    return (
-        <Reveal className={cn("mb-12 max-w-3xl space-y-4", centered && "mx-auto text-center", className)}>
+    const content = (
+        <>
             {eyebrow && <p className="eyebrow">{`// ${eyebrow}`}</p>}
             <Heading
                 className={cn(
-                    "font-display font-bold tracking-tight text-balance",
-                    Heading === "h1" ? "text-4xl md:text-6xl" : "text-3xl md:text-5xl"
+                    "font-display font-bold leading-tight tracking-tight text-balance",
+                    Heading === "h1" ? "text-[2.1rem] sm:text-4xl md:text-5xl" : "text-[1.7rem] sm:text-3xl md:text-4xl"
                 )}
             >
                 {title}
             </Heading>
-            {subtitle && <p className="text-lg text-muted-foreground text-pretty md:text-xl">{subtitle}</p>}
-        </Reveal>
+            {subtitle && <p className="text-base text-muted-foreground text-pretty sm:text-lg">{subtitle}</p>}
+        </>
     );
+    const classes = cn("mb-8 max-w-3xl space-y-3 md:mb-10", centered && "mx-auto text-center", className);
+
+    // Page titles render immediately: an h1 should never wait for an animation to become visible.
+    if (Heading === "h1") return <div className={classes}>{content}</div>;
+    return <Reveal className={classes}>{content}</Reveal>;
 }

@@ -36,6 +36,37 @@ export interface Decision {
     tradeoff: string;
 }
 
+/** Scan-friendly summary shown at the top of a case study. */
+export interface ProjectOverview {
+    /** What the product is. */
+    product: string;
+    /** My contribution and responsibility. */
+    role: string;
+    /** The problem I solved. */
+    problem: string;
+    /** Results or reach. */
+    outcome: string;
+    /** Keep delivered, in-progress and future work clearly apart. */
+    status?: { delivered?: string; inProgress?: string; planned?: string };
+}
+
+export interface ProjectLink {
+    label: string;
+    href: string;
+}
+
+/**
+ * Real screenshot of a personal R&D product, stored in /public/projects/<slug>/.
+ * Test data only, no personal information, nothing from Nology products.
+ */
+export interface ProjectImage {
+    src: string;
+    alt: string;
+    width: number;
+    height: number;
+    caption?: string;
+}
+
 export interface Project {
     slug: string;
     title: string;
@@ -50,6 +81,11 @@ export interface Project {
     url?: string;
     tagline: string;
     summary: string;
+    overview?: ProjectOverview;
+    /** Public evidence: live site, store listings. */
+    links?: ProjectLink[];
+    /** Optional screenshots; the first one is used as the card cover. */
+    gallery?: ProjectImage[];
     metrics: ProjectMetric[];
     /** Key capabilities — mainly for products. */
     features?: string[];
@@ -85,13 +121,27 @@ export const projects: Project[] = [
         ai: false,
         period: "2022 – Present",
         status: "Live on App Store & Google Play",
-        tagline: "A cross-platform driver app I architected from the ground up and have released continuously since 2023.",
+        tagline: "The iOS and Android app drivers use every shift — architected from scratch and maintained in production since its first store release in 2023.",
         summary:
-            "The mobile app carriers' drivers use every shift: accept loads, run pickup and delivery workflows, capture proof of delivery and stream GPS to dispatch. I architected and built it from scratch with React Native, Expo and .NET, and own it end to end — from architecture to store releases and production troubleshooting.",
+            "The mobile app carriers' drivers use every shift: accept loads, run pickup and delivery workflows, capture proof of delivery and stream GPS to dispatch. I architected and built it from scratch with React Native, Expo and .NET, and remain responsible for it after launch: store releases, reliability fixes and field diagnostics.",
+        overview: {
+            product: "DeliverySuite Driver, the iOS and Android app that carriers' drivers use during every shift: loads, pickup and delivery, proof of delivery and GPS tracking.",
+            role: "Architected and built it from scratch (React Native, Expo, .NET), and maintain it in production: store releases, the driver backend API, monitoring and field troubleshooting.",
+            problem: "Weak connectivity and phones that kill background apps were losing driver actions and GPS points, and a single failed GPS ping could make the app look frozen.",
+            outcome: "In daily use by roughly 500–1,000 recurring drivers. Pending work now survives offline periods and app restarts, and field issues can be diagnosed remotely.",
+            status: {
+                delivered: "Production app on both stores since 2023, SQLite outbox, GPS tracking overhaul, remote diagnostics.",
+                inProgress: "Moving the driver backend to the new .NET 10 Driver API.",
+            },
+        },
+        links: [
+            { label: "App Store", href: "https://apps.apple.com/ca/app/deliverysuite-driver/id1663881230" },
+            { label: "Google Play", href: "https://play.google.com/store/apps/details?id=com.nology.deliverysuite" },
+        ],
         metrics: [
             { value: "500–1,000", label: "Recurring users" },
             { value: "Since 2023", label: "Continuous releases to both stores" },
-            { value: "End to end", label: "Architecture to production support" },
+            { value: "Offline-first", label: "Durable sync, confirmed by the server" },
             { value: "iOS + Android", label: "Published on both stores" },
         ],
         features: [
@@ -175,7 +225,7 @@ export const projects: Project[] = [
         approach: [
             "Built prototypes first (late 2022), then the production app; first store release in 2023, with continuous releases since.",
             "Overhauled location tracking: native SDK, watchdog, health reporter, iOS recovery and an in-app GPS diagnostics screen.",
-            "Designed and shipped the SQLite outbox, replacing two capped in-memory queues with durable, server-acknowledged processing.",
+            "Designed and released the SQLite outbox, replacing two capped in-memory queues with durable, server-acknowledged processing.",
             "Added silent-push remote refresh and scan-to-take-over load assignment with multi-tenant fallback.",
             "Integrated the app with the .NET backend for authentication, loads, attachments (with text extraction from documents) and push notifications.",
             "Instrumented production with Firebase Crashlytics and Analytics, plus remote device-log upload to diagnose stuck queues in the field.",
@@ -183,7 +233,7 @@ export const projects: Project[] = [
         ],
         flow: ["Driver action", "SQLite outbox", "Sync worker", "Driver API", "Server ack", "Row deleted"],
         impact: [
-            "Used by roughly 500–1,000 recurring drivers and published continuously to both stores for over 3 years.",
+            "Used by roughly 500–1,000 recurring drivers, with continuous releases to both stores since 2023.",
             "Replaced queues that silently dropped data with durable storage and server-acknowledged processing.",
             "Field issues can now be diagnosed from an in-app GPS diagnostics screen and remote device logs.",
         ],
@@ -199,13 +249,24 @@ export const projects: Project[] = [
         ai: true,
         period: "2026",
         status: "Ongoing",
-        tagline: "Three independently deployable Clean Architecture APIs replacing legacy handlers — migrated with an AI-assisted workflow.",
+        tagline: "Three independently deployable Clean Architecture APIs that replace legacy handlers one operation at a time, without breaking existing clients.",
         summary:
-            "I designed the target backend for DeliverySuite — three independently deployable .NET 10 APIs for Web/Public, Driver and WMS — and an AI-assisted workflow in Claude Code that ports legacy handlers operation by operation, with tests and preserved contracts. The modernization is incremental and ongoing.",
+            "I designed the target backend for DeliverySuite — three independently deployable .NET 10 APIs for Web/Public, Driver and WMS — and lead the incremental migration of legacy handlers into them, one operation at a time, with tests and preserved response contracts. AI coding agents help with inventory and porting; every change is tested and reviewed before it merges.",
+        overview: {
+            product: "The new backend platform for DeliverySuite: Web/Public, Driver and WMS APIs on .NET 10.",
+            role: "Designed the architecture and API boundaries, implemented the first endpoints and test suites, and set up the migration process.",
+            problem: "Business logic lived in large legacy handlers that multiplex many operations; the platform needed testable APIs without breaking a mobile app already in the stores.",
+            outcome: "A tested foundation (90+ xUnit tests) for retiring legacy code incrementally. The new WMS mobile app runs on the new WMS API from day one.",
+            status: {
+                delivered: "Driver API login and load lists, the WMS API behind the new WMS app, 90+ xUnit tests.",
+                inProgress: "Porting the remaining legacy operations, tracked per API.",
+                planned: "Moving business logic from stored procedures into the domain with EF Core (phase 2).",
+            },
+        },
         metrics: [
             { value: "3", label: "Independent .NET 10 APIs" },
             { value: "90+", label: "xUnit tests" },
-            { value: "9", label: "Custom AI subagents" },
+            { value: "Contract-safe", label: "Legacy responses preserved for live clients" },
             { value: "Ongoing", label: "Incremental migration" },
         ],
         problem:
@@ -270,7 +331,7 @@ export const projects: Project[] = [
             },
             {
                 title: "Preserve legacy response contracts",
-                why: "The shipped driver app must keep working during the migration.",
+                why: "The driver app already in the stores must keep working during the migration.",
                 tradeoff: "New endpoints carry some legacy shapes until clients are updated.",
             },
             {
@@ -288,7 +349,7 @@ export const projects: Project[] = [
             "Built per-repo agent pairs in Claude Code: a read-only legacy analyst and a migrator that ports one operation at a time with tests and updates the tracker.",
             "Chained them in a migrate-legacy skill per API, plus slash commands to scaffold CQRS commands/queries and wrap stored procedures.",
             "Connected a SQL Server MCP server for schema-aware work and Engram persistent memory so migrations resume across sessions.",
-            "Enforced a repo rule: every new route ships with tests.",
+            "Enforced a repository rule: every new route must include tests.",
         ],
         flow: ["Legacy handler", "Analyst subagent", "Operation inventory", "Migrator subagent", "CQRS + tests", "Tracker update"],
         impact: [
@@ -310,6 +371,16 @@ export const projects: Project[] = [
         tagline: "Transactional fulfillment, consistent FIFO allocation and reversible data fixes in a live WMS.",
         summary:
             "Work across three parts of DeliverySuite's WMS: a staged rewrite of the web module's order pages and SQL Server logic, a greenfield offline-first mobile app for warehouse staff (in development), and the WMS API that backs it.",
+        overview: {
+            product: "The warehouse module of DeliverySuite: web pages for supervisors, a new mobile app for floor staff and the API behind it.",
+            role: "Rewrote the inbound and outbound pages and their SQL Server logic, corrected live inventory data, and am building the mobile app and its API.",
+            problem: "Inconsistent allocation logic hid picked stock from availability, mixed different customers' stock and left order lines that could never be allocated.",
+            outcome: "Availability now accounts for picked-but-unshipped stock, and 190+ inconsistent records were repaired with reversible scripts.",
+            status: {
+                delivered: "Rewritten inbound/outbound pages, allocation fixes, data repairs and an HTML report pilot.",
+                inProgress: "The offline-first WMS mobile app and its API endpoints.",
+            },
+        },
         metrics: [
             { value: "190+", label: "Inconsistent records repaired" },
             { value: "100%", label: "Data fixes with rollback scripts" },
@@ -377,8 +448,8 @@ export const projects: Project[] = [
             },
             {
                 title: "Every data fix is reversible",
-                why: "Live operational data: each correction ships with backup tables and a rollback script.",
-                tradeoff: "Slower to ship, but no fix can make things worse irreversibly.",
+                why: "Live operational data: each correction comes with backup tables and a rollback script.",
+                tradeoff: "Slower to deliver, but no fix can make things worse irreversibly.",
             },
             {
                 title: "Template-driven reports",
@@ -412,7 +483,7 @@ export const projects: Project[] = [
         ],
         stack: ["SQL Server", "T-SQL", "ASP.NET", "C#", "DevExtreme", "Expo", "TanStack Query", "Zustand", "Zod", "Handlebars", "Paged.js"],
         learning:
-            "On live operational data, the rollback plan is part of the feature. Ship small, keep the old path available and make every fix reversible.",
+            "On live operational data, the rollback plan is part of the feature. Change things in small steps, keep the old path available and make every fix reversible.",
     },
     {
         slug: "deliverysuite-saas-modernization",
@@ -421,16 +492,23 @@ export const projects: Project[] = [
         category: "enterprise",
         ai: false,
         period: "2022 – Present",
-        tagline: "Keeping a multi-tenant logistics SaaS fast and evolving for ~200 business customers.",
+        tagline: "Keeping a B2B2C multi-tenant logistics SaaS fast and evolving for ~200 business customers and the end customers they serve.",
         summary:
-            "DeliverySuite is a multi-tenant logistics SaaS — transportation management, warehouse operations and driver workflows — used by carrier companies for order entry, pricing, dispatch, invoicing and customer portals. I've been its main developer since 2022.",
+            "DeliverySuite is a multi-tenant logistics SaaS — transportation management, warehouse operations and driver workflows — used by carrier companies for order entry, pricing, dispatch, invoicing and customer portals. It is B2B2C: each business customer typically has 10–30 staff users, and their own customers (from 80 to 1,200 per business customer) also use the platform to place and track orders. I've been its main developer since 2022.",
+        overview: {
+            product: "DeliverySuite, a B2B2C multi-tenant logistics SaaS: ~200 business customers, each with 10–30 staff users on average and 80–1,200 end customers of their own.",
+            role: "Main developer since 2022 across web, database and integrations, responsible for performance work and the delivery process.",
+            problem: "Some critical pages took 12–18 seconds to load while the product had to keep evolving for many tenants.",
+            outcome: "Selected critical pages now load in 2–3 s, with steady feature delivery every month since early 2023.",
+        },
         metrics: [
-            { value: "~200", label: "Business customers" },
+            { value: "~200", label: "Business customers (B2B2C)" },
+            { value: "10–30", label: "Staff users per business customer, on average" },
+            { value: "80–1,200", label: "End customers per business customer" },
             { value: "2–3 s", label: "Selected critical page loads (from 12–18 s)" },
-            { value: "1,250+", label: "Commits" },
         ],
         problem:
-            "A large ASP.NET Web Forms + SQL Server product had to keep shipping features for many tenants while some critical pages took 12–18 seconds to load and the UI aged.",
+            "A large ASP.NET Web Forms + SQL Server product serving business customers and their own end customers had to keep delivering features for many tenants while some critical pages took 12–18 seconds to load and the UI aged.",
         responsibilities: [
             "Feature development across web, database and integrations",
             "Performance work on critical workflows",
@@ -439,7 +517,7 @@ export const projects: Project[] = [
         approach: [
             "Optimized SQL Server stored procedures, added indexes and tuned the database for the slowest workflows.",
             "Moved slow tab data access to an async handler layer and reordered database calls on the busiest pages.",
-            "Profiled a customer-selection freeze of up to ~14 s down to ~500 forced browser layouts (server and network were only ~1 s) and shipped targeted fixes.",
+            "Profiled a customer-selection freeze of up to ~14 s down to ~500 forced browser layouts (server and network were only ~1 s) and applied targeted fixes.",
             "Delivered tenant setup, cross-tab session management, dispatch-board actions, quote-to-load conversion, a responsive load-entry page, route-time calculation and single-tab edit locks.",
             "Migrated legacy controls to DevExtreme widgets and introduced Git source control and Azure DevOps boards and pull requests.",
         ],
@@ -510,10 +588,22 @@ export const projects: Project[] = [
         tagline: "Exam simulations, AI-graded writing and speaking, and a conversational AI examiner — self-hosted on k3s.",
         summary:
             "A web platform for preparing the TCF Canada French exam that I designed and built as personal R&D: timed simulations across the four skills, AI-assisted grading of writing and speaking, a conversational AI speaking examiner, a RAG study assistant and spaced-repetition flashcards — all behind a provider-agnostic LLM layer.",
+        overview: {
+            product: "A web platform for practicing the TCF Canada French exam: timed simulations, AI-assisted grading of writing and speaking, and a conversational speaking examiner.",
+            role: "Personal R&D. I designed and built it: architecture, full-stack implementation, the LLM integration layer and its deployment on my homelab.",
+            problem: "AI features depended on several providers with different quotas, prices and failure modes; one outage or exhausted quota could block grading for everyone.",
+            outcome: "Failing models are skipped automatically, switching models is a configuration change instead of a deploy, and the cost of every AI call is visible.",
+            status: {
+                delivered: "Live platform: simulations, grading, speaking examiner, RAG assistant and flashcards.",
+            },
+        },
+        links: [
+            { label: "Visit hellotcf.com", href: "https://hellotcf.com" },
+        ],
         metrics: [
             { value: "8", label: "AI provider adapters" },
             { value: "3-tier", label: "Model fallback chains" },
-            { value: "58", label: "Data models" },
+            { value: "Per call", label: "Token and cost logging" },
             { value: "4", label: "Exam skills simulated" },
         ],
         features: [
@@ -639,11 +729,20 @@ export const projects: Project[] = [
         tagline: "Web, mobile and API for discovering local farms, products, experiences and rural stays.",
         summary:
             "A marketplace and agritourism platform connecting people with local Canadian farms — fresh products, farm experiences and rural stays — that I built as personal R&D: a Turborepo monorepo with a Next.js web app, an Expo mobile app and a NestJS API, with AI-assisted listings and semantic search.",
+        overview: {
+            product: "A marketplace for local farms' products, experiences and rural stays, on web and mobile.",
+            role: "Personal R&D. I designed the monorepo, API and data model, built the web, mobile and API apps, and defined the testing strategy.",
+            problem: "Three audiences with different permissions — shoppers, farmers and admins — had to be served on web and mobile from one codebase.",
+            outcome: "One API and one schema package serve both apps; critical flows are covered by end-to-end, authorization and load tests.",
+        },
+        links: [
+            { label: "Visit farmilygo.com", href: "https://farmilygo.com" },
+        ],
         metrics: [
             { value: "3", label: "Apps: web, mobile, API" },
-            { value: "51", label: "Data models" },
             { value: "13", label: "Playwright E2E suites" },
             { value: "4", label: "Role-based workspaces" },
+            { value: "k6", label: "Load tests for search and peak traffic" },
         ],
         features: [
             "Four role-based workspaces: Shop, Customer, Farmer and Admin",
@@ -968,7 +1067,7 @@ export const projects: Project[] = [
             "k3s cluster with Traefik v3 ingress (Helm) and cert-manager issuing Let's Encrypt certificates through Cloudflare DNS-01 challenges.",
             "PostgreSQL, Redis and MinIO run as dedicated services outside the cluster; Kubernetes Secrets inject connection settings.",
             "GitHub Actions builds images, pushes them to a private registry and rolls out deployments; migration jobs run before each rollout.",
-            "A backup VM runs daily database dumps and media mirroring, then ships copies off-site.",
+            "A backup VM runs daily database dumps and media mirroring, then copies them off-site.",
             "Runbooks document how to onboard a project (namespace, deployment, service, ingress) and how backups work.",
         ],
         flow: ["git push", "GitHub Actions", "Docker build", "Private registry", "Migration job", "Rollout + TLS"],
@@ -1001,7 +1100,7 @@ export const projects: Project[] = [
         metrics: [
             { value: "5", label: "Backend services scaffolded" },
             { value: "3", label: "Front ends scaffolded" },
-            { value: "67", label: "Commits (foundation phase)" },
+            { value: "Paused", label: "Foundation built, domain logic not started" },
         ],
         problem: "Multi-tenant SaaS needs strict data isolation, centralized identity and AI features that never sit on the critical path.",
         approach: [
@@ -1050,20 +1149,20 @@ export const projects: Project[] = [
         problem: "Debugging distributed services requires correlated, structured logs in one place.",
         approach: [
             "Pino structured JSON logs from a NestJS gateway, a NATS microservice and a Next.js app.",
-            "Vector aggregates stdout and ships to Elasticsearch; Kibana dashboards for search and visualization.",
+            "Vector collects stdout and forwards it to Elasticsearch; Kibana dashboards for search and visualization.",
         ],
         impact: ["A reusable logging baseline for my services."],
         stack: ["NestJS", "NATS", "Pino", "Vector", "Elasticsearch", "Kibana", "Turborepo"],
-        learning: "Decide the log schema before the first service ships.",
+        learning: "Decide the log schema before the first service goes live.",
     },
 ];
 
 /** Projects shown on the home page, in order. */
-export const homeProjectSlugs = [
-    "deliverysuite-driver",
-    "enterprise-api-modernization",
-    "hellotcf",
-    "wms-inventory-engineering",
-    "farmilygo",
-    "etb-self-service-platform",
-];
+export const homeProjectSlugs = ["deliverysuite-driver", "enterprise-api-modernization", "hellotcf"];
+
+/** Every project URL a project exposes as public evidence (store listings, live site). */
+export function projectLinks(project: Project): ProjectLink[] {
+    if (project.links) return project.links;
+    if (project.url) return [{ label: "Visit " + project.url.replace(/^https?:\/\//, ""), href: project.url }];
+    return [];
+}

@@ -16,14 +16,6 @@ export interface SkillGroup {
 
 export const skillGroups: SkillGroup[] = [
     {
-        name: "Frontend & Mobile",
-        icon: "layout",
-        highlight: true,
-        items: ["React", "React Native", "Expo / EAS", "JavaScript · TypeScript", "Redux Toolkit", "jQuery · DevExtreme", "Xamarin (earlier career)"],
-        lab: ["Next.js", "TanStack Query · Zustand", "Tailwind CSS"],
-        proof: "A driver app built from the ground up and released continuously on both stores since 2023 — and the front end of this site.",
-    },
-    {
         name: "Backend",
         icon: "server",
         highlight: true,
@@ -32,19 +24,27 @@ export const skillGroups: SkillGroup[] = [
         proof: "Three independently deployable .NET 10 APIs with 90+ tests at Nology; Node.js microservices at ETB.",
     },
     {
-        name: "Cloud & Delivery",
-        icon: "cloud",
+        name: "Frontend & Mobile",
+        icon: "layout",
         highlight: true,
-        items: ["Azure", "AWS", "Docker", "Kubernetes", "Git · Azure DevOps", "CI/CD", "Expo EAS", "Firebase"],
-        lab: ["k3s · Proxmox", "OPNsense", "GitHub Actions", "Traefik · cert-manager", "MinIO / S3", "Prometheus"],
-        proof: "Azure DevOps workflows and Expo EAS store releases at Nology; Kubernetes on Azure at ETB; push-to-deploy pipelines on my own k3s platform.",
+        items: ["React", "React Native", "Expo / EAS", "JavaScript · TypeScript", "Redux Toolkit", "jQuery · DevExtreme", "Xamarin (earlier career)"],
+        lab: ["Next.js", "TanStack Query · Zustand", "Tailwind CSS"],
+        proof: "A driver app built from scratch and released to both stores since 2023, plus the web front ends of a multi-tenant SaaS.",
     },
     {
         name: "Data",
         icon: "database",
+        highlight: true,
         items: ["SQL Server · T-SQL", "Query & index optimization", "Transactions & data integrity", "Oracle", "MongoDB", "SQLite (mobile)"],
         lab: ["PostgreSQL", "Redis", "pgvector · PostGIS", "Prisma"],
         proof: "Selected critical pages from ~12–18 s to 2–3 s through stored-procedure and index tuning.",
+    },
+    {
+        name: "Cloud & Delivery",
+        icon: "cloud",
+        items: ["Azure", "AWS", "Docker", "Kubernetes", "Git · Azure DevOps", "CI/CD", "Expo EAS", "Firebase"],
+        lab: ["k3s · Proxmox", "OPNsense", "GitHub Actions", "Traefik · cert-manager", "MinIO / S3", "Prometheus"],
+        proof: "Azure DevOps workflows and Expo EAS store releases at Nology; Kubernetes on Azure at ETB; push-to-deploy pipelines on my own k3s platform.",
     },
     {
         name: "Architecture",
@@ -59,14 +59,14 @@ export const skillGroups: SkillGroup[] = [
             "Offline-first sync",
         ],
         lab: ["Event-driven (NATS, job queues)", "Hexagonal modular monoliths", "ADRs"],
-        proof: "Incremental modernization of a multi-tenant logistics SaaS serving ~200 business customers.",
+        proof: "Incremental modernization of a multi-tenant logistics SaaS serving ~200 business customers and their end customers (B2B2C).",
     },
     {
-        name: "AI Engineering",
+        name: "AI in Engineering",
         icon: "bot",
-        items: ["Claude Code", "Codex", "Custom subagents & skills", "MCP integrations", "Agent workflows", "AI-assisted debugging & migration"],
-        lab: ["LLM APIs (Anthropic, OpenAI, Gemini, Groq)", "RAG (pgvector)", "Structured outputs", "LLM-as-judge review", "STT / TTS"],
-        proof: "AI-assisted legacy migration at work; LLM features with fallback chains and human review in R&D products.",
+        items: ["Claude Code · Codex", "Custom agents & skills", "MCP integrations", "AI-assisted migration & debugging"],
+        lab: ["LLM APIs", "RAG (pgvector)", "Structured outputs", "Model fallbacks & cost tracking", "LLM review + human approval", "STT / TTS"],
+        proof: "Daily AI-assisted development at work, always behind tests and review; LLM features built in personal R&D products.",
     },
     {
         name: "Quality & Leadership",

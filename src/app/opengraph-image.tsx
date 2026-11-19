@@ -43,9 +43,10 @@ export default function OpengraphImage() {
                 </div>
                 <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
                     <div style={{ fontSize: 76, fontWeight: 700, lineHeight: 1.05 }}>{siteConfig.name}</div>
-                    <div style={{ fontSize: 40, color: "#60a5fa" }}>{siteConfig.title + " · " + siteConfig.tagline}</div>
-                    <div style={{ fontSize: 28, color: "#9aa3b2", maxWidth: 980 }}>
-                        Frontend · Backend · Mobile · CI/CD · AI-assisted engineering · 15+ years in production
+                    <div style={{ fontSize: 44, color: "#60a5fa" }}>{siteConfig.title}</div>
+                    <div style={{ fontSize: 30, color: "#c7cdd6", maxWidth: 1000 }}>{siteConfig.tagline}</div>
+                    <div style={{ fontSize: 26, color: "#9aa3b2", maxWidth: 1000 }}>
+                        Web and mobile apps, APIs, databases and CI/CD · 15+ years in production
                     </div>
                 </div>
                 <div style={{ display: "flex", fontSize: 24, color: "#9aa3b2" }}>{siteConfig.location}</div>

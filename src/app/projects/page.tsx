@@ -5,18 +5,18 @@ import ProjectsExplorer from "@/components/ProjectsExplorer";
 export const metadata: Metadata = {
     title: "Work",
     description:
-        "Case studies: AI-assisted legacy migration, a multi-provider LLM gateway, human-in-the-loop LLM pipelines, an offline-first driver app, WMS modernization and a self-hosted Kubernetes homelab.",
+        "Case studies: an offline-first driver app on both app stores, .NET 10 API modernization, SaaS performance work, warehouse inventory processing, and personal R&D products with LLM features.",
     alternates: { canonical: "/projects" },
 };
 
 export default function ProjectsPage() {
     return (
-        <div className="container-page py-16 md:py-24">
+        <div className="container-page py-10 md:py-16">
             <SectionHeading
                 as="h1"
                 eyebrow="work"
                 title="Case studies"
-                subtitle="Production work at Nology Solutions, AI engineering from my personal R&D lab, and highlights from earlier in my career."
+                subtitle="Production work at Nology Solutions and ETB, followed by personal R&D products and architecture work. Each case study starts with a short summary."
             />
             <ProjectsExplorer />
         </div>

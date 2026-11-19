@@ -15,7 +15,7 @@ const icons: Record<SkillGroup["icon"], React.ComponentType<{ className?: string
 
 export default function SkillsGrid() {
     return (
-        <div className="space-y-6">
+        <div className="space-y-5">
             <p className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-muted-foreground">
                 <span className="inline-flex items-center gap-2">
                     <span className="rounded-md border border-border bg-background px-2 py-0.5 text-xs text-foreground">Solid</span>
@@ -26,7 +26,7 @@ export default function SkillsGrid() {
                     personal R&amp;D projects
                 </span>
             </p>
-            <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-5 lg:grid-cols-3">
                 {skillGroups.map((group, i) => {
                     const Icon = icons[group.icon];
                     return (
@@ -34,17 +34,17 @@ export default function SkillsGrid() {
                             key={group.name}
                             delay={(i % 3) * 0.06}
                             className={cn(
-                                "flex flex-col rounded-xl border bg-card p-6",
+                                "flex flex-col rounded-xl border bg-card p-5 md:p-6",
                                 group.highlight ? "border-primary/40" : "border-border",
                                 // A lone card in the last row spans the full width instead of leaving gaps.
                                 i === skillGroups.length - 1 && skillGroups.length % 3 === 1 && "md:col-span-2 lg:col-span-3",
                                 i === skillGroups.length - 1 && skillGroups.length % 2 === 1 && "md:col-span-2"
                             )}
                         >
-                            <div className="mb-4 flex items-center gap-3">
+                            <div className="mb-3 flex items-center gap-3">
                                 <span
                                     className={cn(
-                                        "flex size-10 items-center justify-center rounded-lg",
+                                        "flex size-9 shrink-0 items-center justify-center rounded-lg",
                                         group.highlight ? "bg-primary text-primary-foreground" : "bg-muted text-primary"
                                     )}
                                 >
@@ -68,8 +68,8 @@ export default function SkillsGrid() {
                                     ))}
                                 </ul>
                             )}
-                            <p className="mt-auto pt-5 text-sm text-muted-foreground">
-                                <span className="font-mono text-xs text-primary">proof → </span>
+                            <p className="mt-auto pt-4 text-sm text-muted-foreground">
+                                <span className="font-mono text-xs text-primary">used in → </span>
                                 {group.proof}
                             </p>
                         </Reveal>

@@ -7,7 +7,7 @@ import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
     title: "Résumé",
-    description: "Résumé of Ivan Ruiz — Senior Software Engineer, AI Engineering.",
+    description: "Résumé of Ivan Ruiz — Senior Full-Stack Engineer: .NET/C#, React, React Native, Node.js, SQL Server and CI/CD.",
     alternates: { canonical: "/resume" },
 };
 
@@ -18,32 +18,32 @@ export const metadata: Metadata = {
 
 const skillLines: { label: string; value: string }[] = [
     {
-        label: "Frontend & Mobile",
-        value: "React, React Native, Expo/EAS, JavaScript, TypeScript, Redux Toolkit, jQuery/DevExtreme, Xamarin (earlier career)",
-    },
-    {
         label: "Backend",
-        value: "C#, .NET / .NET 10, ASP.NET Core Web API, Node.js, TypeScript, REST APIs, SQL stored procedures, Java (earlier career)",
+        value: "C#, .NET / .NET 10, ASP.NET Core Web API, Node.js, REST APIs, Clean Architecture, CQRS/MediatR, Dapper, JWT, Java (earlier career)",
     },
     {
-        label: "Cloud & Delivery",
-        value: "CI/CD with Azure DevOps and Expo EAS (builds and App Store / Google Play releases), Git, Docker, Kubernetes, Azure, AWS, Firebase; testing with xUnit and Jest",
-    },
-    {
-        label: "Architecture",
-        value: "Enterprise SaaS, multi-tenancy, API design, Clean Architecture, CQRS/MediatR, microservices, legacy modernization, offline-first sync",
+        label: "Frontend & Mobile",
+        value: "React, React Native, Expo/EAS, TypeScript, JavaScript, Redux Toolkit, jQuery/DevExtreme, Xamarin (earlier career)",
     },
     {
         label: "Data",
-        value: "SQL Server (T-SQL, query and index optimization, transactions, data integrity), Oracle, MongoDB, SQLite",
+        value: "SQL Server (T-SQL, stored procedures, query and index optimization, transactions), Oracle, MongoDB, SQLite",
     },
     {
-        label: "AI Engineering",
-        value: "Claude Code, Codex, custom subagents and skills, MCP integrations, agent workflows, AI-assisted debugging and legacy migration",
+        label: "Cloud & Delivery",
+        value: "Azure DevOps, Git, CI/CD, Expo EAS (App Store / Google Play releases), Docker, Kubernetes, Azure, AWS, Firebase; xUnit, Jest",
+    },
+    {
+        label: "Architecture",
+        value: "Multi-tenant SaaS, API design, microservices, legacy modernization, offline-first sync, performance profiling",
+    },
+    {
+        label: "AI in Engineering",
+        value: "Claude Code and Codex with custom agents, skills and MCP for code exploration, migration, tests and review; LLM integration (R&D)",
     },
     {
         label: "Personal R&D",
-        value: "NestJS, Python/FastAPI, Go, PostgreSQL (pgvector, PostGIS), Redis, Next.js, LLM APIs, RAG, STT/TTS, Proxmox, OPNsense, k3s, GitHub Actions, Playwright, k6",
+        value: "NestJS, Python/FastAPI, PostgreSQL (pgvector, PostGIS), Redis, Next.js, RAG, Proxmox, k3s, GitHub Actions, Playwright, k6",
     },
 ];
 
@@ -52,23 +52,18 @@ const rdProjects: { name: string; url?: string; detail: string }[] = [
         name: "HelloTCF",
         url: "hellotcf.com",
         detail:
-            "AI-powered TCF Canada practice platform (Next.js 16, PostgreSQL/pgvector, k3s): exam simulations, AI-graded writing and speaking, a conversational speaking examiner (STT/TTS), RAG assistant; provider-agnostic LLM layer with 8 adapters, 3-tier fallback chains, a Postgres-persisted circuit breaker and per-call cost logging.",
+            "French exam practice platform (Next.js, PostgreSQL/pgvector, k3s) with AI-assisted grading and a speaking examiner; provider-agnostic LLM layer with fallback chains, a shared circuit breaker and per-call cost logging.",
     },
     {
         name: "FarmilyGo",
         url: "farmilygo.com",
         detail:
-            "Farm-to-consumer marketplace: Turborepo monorepo with Next.js 16 web, Expo mobile and NestJS 11 API; PostgreSQL with PostGIS and pgvector; Claude-powered listing assistant (vision) and semantic search; Playwright E2E and k6 load tests.",
-    },
-    {
-        name: "Human-in-the-loop LLM content pipeline",
-        detail:
-            "LLM generation → schema and rule validation → independent LLM reviewer → human approval of immutable revisions → TTS jobs, with full provenance; built in TypeScript (BullMQ) and Python (FastAPI, Pydantic, Dramatiq).",
+            "Farm marketplace: Turborepo monorepo with Next.js web, Expo mobile and a NestJS API on PostgreSQL (PostGIS, pgvector); Playwright E2E and k6 load tests.",
     },
     {
         name: "Homelab platform",
         detail:
-            "Proxmox (2 nodes, VMs and LXC) behind an OPNsense firewall with site-to-site VPN; 3-node k3s cluster (Traefik, cert-manager, private registry, GitHub Actions); dedicated PostgreSQL, Redis and MinIO; daily backups with two off-site copies. Hosts this portfolio and HelloTCF.",
+            "Two Proxmox nodes behind an OPNsense firewall, a 3-node k3s cluster with push-to-deploy CI/CD, dedicated PostgreSQL, Redis and MinIO, and daily backups with two off-site copies.",
     },
 ];
 

@@ -1,10 +1,9 @@
 import Link from "next/link";
-import { ArrowRight, Bot, LayoutTemplate, Rocket, Server } from "lucide-react";
+import { ArrowRight, Bot, Database, LayoutTemplate, Rocket, Server, Sparkles } from "lucide-react";
 import Hero from "@/components/Hero";
 import Reveal from "@/components/Reveal";
 import SectionHeading from "@/components/SectionHeading";
 import ProjectCard from "@/components/ProjectCard";
-import FlowDiagram from "@/components/FlowDiagram";
 import Timeline from "@/components/Timeline";
 import SkillsGrid from "@/components/SkillsGrid";
 import CopyEmailButton from "@/components/CopyEmailButton";
@@ -13,31 +12,37 @@ import { experiences } from "@/lib/data/experience";
 import { homeProjectSlugs, projects } from "@/lib/data/projects";
 import { siteConfig } from "@/lib/site";
 
-const pillars = [
+/** What I solve — no metrics here; the proof strip and case studies carry the numbers. */
+const capabilities = [
     {
         icon: LayoutTemplate,
-        title: "Frontend & mobile",
-        body: "Clean, accessible interfaces in React and Next.js, and a React Native app built from the ground up and published on both stores — offline-first, with background GPS and proof of delivery.",
+        title: "Web & mobile products",
+        body: "React and Next.js interfaces, and a React Native app built from scratch for iOS and Android — designed for weak networks, background GPS and offline work.",
     },
     {
         icon: Server,
-        title: "Backend & data",
-        body: ".NET, Node.js and SQL Server systems designed for change: Clean Architecture, CQRS, independently deployable APIs and query tuning that took critical pages from 12–18 s to 2–3 s.",
+        title: "APIs & architecture",
+        body: ".NET/C# and Node.js services with Clean Architecture and CQRS, split where release cycles differ, and migrated off legacy code without breaking existing clients.",
+    },
+    {
+        icon: Database,
+        title: "Data & performance",
+        body: "SQL Server modeling, stored procedures, indexes and transactions — plus profiling to find whether a slow page is the database, the server or the browser.",
     },
     {
         icon: Rocket,
-        title: "CI/CD & cloud",
-        body: "Automated delivery from commit to production: Azure DevOps workflows, Expo EAS builds and store releases, Docker and Kubernetes, and GitHub Actions pipelines that deploy on every push.",
-    },
-    {
-        icon: Bot,
-        title: "AI-assisted engineering",
-        body: "Claude Code and Codex in daily use — custom subagents, skills and MCP — plus LLM features built with guardrails: structured outputs, RAG, fallback chains and human review.",
+        title: "Delivery & operations",
+        body: "Git and Azure DevOps workflows, store releases with Expo EAS, Docker and Kubernetes, and crash monitoring and field diagnostics after launch.",
     },
 ];
 
-const workflow = projects.find((p) => p.slug === "agentic-engineering-workflow");
-const migration = projects.find((p) => p.slug === "enterprise-api-modernization");
+const llmWork = [
+    "Model fallback chains and a circuit breaker shared across instances",
+    "RAG over pgvector with a semantic cache",
+    "Schema-validated structured outputs (Zod, Pydantic)",
+    "Per-call token and cost logging",
+    "LLM review followed by human approval before anything is published",
+];
 
 export default function Home() {
     const homeProjects = homeProjectSlugs
@@ -50,82 +55,24 @@ export default function Home() {
 
             {/* Proof strip */}
             <section aria-label="Highlights" className="border-y border-border/60 bg-card/40">
-                <dl className="container-page grid grid-cols-2 gap-y-8 py-10 md:grid-cols-4">
-                    {siteConfig.stats.map((s, i) => (
-                        <Reveal key={s.label} delay={i * 0.06} className="px-2 text-center md:border-l md:border-border md:first:border-l-0">
+                <dl className="container-page grid grid-cols-2 gap-x-4 gap-y-6 py-6 md:grid-cols-4 md:py-8">
+                    {siteConfig.stats.map((s) => (
+                        <div key={s.label} className="px-1 text-center md:border-l md:border-border md:px-3 md:first:border-l-0">
                             <dt className="sr-only">{s.label}</dt>
-                            <dd className="font-display text-3xl font-bold text-primary md:text-4xl">{s.value}</dd>
-                            <dd className="mt-1 text-sm text-muted-foreground">{s.label}</dd>
-                        </Reveal>
+                            <dd className="font-display text-2xl font-bold text-primary md:text-3xl">{s.value}</dd>
+                            <dd className="mt-1 text-xs leading-snug text-muted-foreground sm:text-sm">{s.label}</dd>
+                        </div>
                     ))}
                 </dl>
             </section>
 
-            {/* What I bring */}
-            <section className="container-page py-24">
-                <SectionHeading
-                    eyebrow="what I bring"
-                    title="End-to-end ownership, from pixels to pipelines."
-                    subtitle="I work across the whole stack — interface, API, database and delivery — with 15+ years of production experience and practical AI-assisted development."
-                />
-                <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-                    {pillars.map((p, i) => (
-                        <Reveal key={p.title} delay={(i % 2) * 0.08} className="rounded-xl border border-border bg-card p-6">
-                            <p.icon className="size-6 text-primary" />
-                            <h3 className="mt-4 font-display text-xl font-bold">{p.title}</h3>
-                            <p className="mt-2 text-muted-foreground">{p.body}</p>
-                        </Reveal>
-                    ))}
-                </div>
-            </section>
-
-            {/* How I build with AI */}
-            <section className="relative border-y border-border/60 bg-card/30 py-24">
-                <div className="container-page">
-                    <SectionHeading
-                        eyebrow="how I build with AI"
-                        title="Agents with guardrails, not autocomplete."
-                        subtitle="I design the process the agents follow: narrow roles, explicit artifacts between steps, tests and independent review."
-                    />
-                    <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-                        {migration?.flow && (
-                            <Reveal className="space-y-4">
-                                <h3 className="font-display text-xl font-bold">At work: migrating a legacy backend</h3>
-                                <p className="text-muted-foreground">
-                                    A read-only analyst subagent inventories each legacy handler; a migrator ports one operation at a time into
-                                    .NET 10 CQRS with tests; a tracker keeps humans and agents in sync. SQL Server MCP and persistent memory give
-                                    the agents real context.
-                                </p>
-                                <FlowDiagram steps={migration.flow} label="migrate-legacy skill" />
-                                <Link href={"/projects/" + migration.slug} className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
-                                    Read the case study <ArrowRight className="size-4" />
-                                </Link>
-                            </Reveal>
-                        )}
-                        {workflow?.flow && (
-                            <Reveal delay={0.08} className="space-y-4">
-                                <h3 className="font-display text-xl font-bold">Everywhere: spec-driven development</h3>
-                                <p className="text-muted-foreground">
-                                    In Claude Code and Codex, each phase runs as its own subagent. A four-lens review panel plus a refuter
-                                    challenges every change, two blind judges gate critical ones, and Engram MCP gives agents durable memory.
-                                </p>
-                                <FlowDiagram steps={workflow.flow} label="sdd pipeline" />
-                                <Link href={"/projects/" + workflow.slug} className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
-                                    See the workflow <ArrowRight className="size-4" />
-                                </Link>
-                            </Reveal>
-                        )}
-                    </div>
-                </div>
-            </section>
-
             {/* Selected work */}
-            <section className="container-page py-24">
-                <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+            <section className="container-page py-14 md:py-20">
+                <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
                     <SectionHeading
                         eyebrow="selected work"
                         title="Case studies"
-                        subtitle="Enterprise engineering at Nology Solutions and ETB, plus personal R&D products with architecture diagrams and trade-offs."
+                        subtitle="Production software I built and maintain, and a personal R&D product. Each one covers the problem, my role, the decisions and the results."
                         className="mb-0"
                     />
                     <Button variant="outline" asChild className="self-start md:self-auto">
@@ -134,52 +81,125 @@ export default function Home() {
                         </Link>
                     </Button>
                 </div>
-                <ul className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+                <ul className="mt-8 grid grid-cols-1 gap-5 md:mt-10 md:grid-cols-2 lg:grid-cols-3">
                     {homeProjects.map((project, i) => (
-                        <Reveal as="li" key={project.slug} delay={(i % 3) * 0.06}>
+                        <Reveal as="li" key={project.slug} delay={i * 0.05}>
                             <ProjectCard project={project} />
                         </Reveal>
                     ))}
                 </ul>
             </section>
 
-            {/* Experience */}
-            <section className="border-y border-border/60 bg-card/30 py-24">
+            {/* What I bring */}
+            <section className="border-y border-border/60 bg-card/30 py-14 md:py-20">
                 <div className="container-page">
-                    <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
-                        <SectionHeading eyebrow="experience" title="15+ years, three companies, one constant: shipping." className="mb-0" />
-                        <Button variant="outline" asChild className="self-start md:self-auto">
-                            <Link href="/experience">
-                                Full experience <ArrowRight className="size-4" />
-                            </Link>
-                        </Button>
-                    </div>
-                    <div className="mt-12">
-                        <Timeline items={experiences} compact />
+                    <SectionHeading
+                        eyebrow="what I bring"
+                        title="Engineering that carries across industries"
+                        subtitle="Logistics and telecom are where I proved it. The same skills apply to any product with real users, real data and a release to plan."
+                    />
+                    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-5">
+                        {capabilities.map((c, i) => (
+                            <Reveal key={c.title} delay={(i % 2) * 0.05} className="rounded-xl border border-border bg-card p-5 md:p-6">
+                                <div className="flex items-center gap-3">
+                                    <c.icon className="size-5 shrink-0 text-primary" />
+                                    <h3 className="font-display text-lg font-bold md:text-xl">{c.title}</h3>
+                                </div>
+                                <p className="mt-2 text-muted-foreground">{c.body}</p>
+                            </Reveal>
+                        ))}
                     </div>
                 </div>
             </section>
 
+            {/* Experience */}
+            <section className="container-page py-14 md:py-20">
+                <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
+                    <SectionHeading eyebrow="experience" title="15+ years of building and delivering production software" className="mb-0" />
+                    <Button variant="outline" asChild className="self-start md:self-auto">
+                        <Link href="/experience">
+                            Full experience <ArrowRight className="size-4" />
+                        </Link>
+                    </Button>
+                </div>
+                <div className="mt-8 md:mt-10">
+                    <Timeline items={experiences} compact />
+                </div>
+            </section>
+
             {/* Skills */}
-            <section className="container-page py-24">
+            <section className="border-y border-border/60 bg-card/30 py-14 md:py-20">
+                <div className="container-page">
+                    <SectionHeading
+                        eyebrow="toolbox"
+                        title="Skills and where I used them"
+                        subtitle="Each group points to concrete work. Production experience and personal R&D are marked separately."
+                    />
+                    <SkillsGrid />
+                </div>
+            </section>
+
+            {/* AI, in proportion */}
+            <section className="container-page py-14 md:py-20">
                 <SectionHeading
-                    eyebrow="toolbox"
-                    title="Skills, with receipts."
-                    subtitle="Every group links back to something I built and shipped."
+                    eyebrow="ai, with judgment"
+                    title="How I use AI"
+                    subtitle="Two different things: tools that help me write and review code, and LLM features inside products. I keep them apart."
                 />
-                <SkillsGrid />
+                <div className="grid grid-cols-1 gap-4 md:gap-5 lg:grid-cols-2">
+                    <Reveal className="flex flex-col rounded-xl border border-border bg-card p-5 md:p-6">
+                        <div className="flex items-center gap-3">
+                            <Bot className="size-5 shrink-0 text-primary" />
+                            <h3 className="font-display text-lg font-bold md:text-xl">AI-assisted development</h3>
+                        </div>
+                        <p className="mt-1 font-mono text-xs text-muted-foreground">Daily, at work and in R&amp;D</p>
+                        <p className="mt-3 text-muted-foreground">
+                            I use Claude Code and Codex to explore unfamiliar code, inventory legacy handlers, draft tests and review diffs. The
+                            agents work in small, checkable steps; I review every change, and the tests decide what merges.
+                        </p>
+                        <Link
+                            href="/projects/enterprise-api-modernization"
+                            className="mt-auto inline-flex items-center gap-1 pt-4 text-sm font-medium text-primary hover:underline"
+                        >
+                            See it in the API modernization <ArrowRight className="size-4" />
+                        </Link>
+                    </Reveal>
+                    <Reveal delay={0.05} className="flex flex-col rounded-xl border border-border bg-card p-5 md:p-6">
+                        <div className="flex items-center gap-3">
+                            <Sparkles className="size-5 shrink-0 text-primary" />
+                            <h3 className="font-display text-lg font-bold md:text-xl">LLM features I have built</h3>
+                        </div>
+                        <p className="mt-1 font-mono text-xs text-muted-foreground">Personal R&amp;D products</p>
+                        <ul className="mt-3 space-y-1.5">
+                            {llmWork.map((item) => (
+                                <li key={item} className="flex gap-3 text-muted-foreground">
+                                    <span aria-hidden className="mt-2.5 h-px w-3 shrink-0 bg-primary" />
+                                    <span>{item}</span>
+                                </li>
+                            ))}
+                        </ul>
+                        <div className="mt-auto flex flex-wrap gap-x-5 gap-y-1 pt-4 text-sm font-medium">
+                            <Link href="/projects/hellotcf" className="inline-flex items-center gap-1 text-primary hover:underline">
+                                HelloTCF <ArrowRight className="size-4" />
+                            </Link>
+                            <Link href="/projects/human-in-the-loop-content-pipeline" className="inline-flex items-center gap-1 text-primary hover:underline">
+                                Human-in-the-loop pipeline <ArrowRight className="size-4" />
+                            </Link>
+                        </div>
+                    </Reveal>
+                </div>
             </section>
 
             {/* CTA */}
-            <section className="container-page pb-24">
-                <Reveal className="relative overflow-hidden rounded-2xl border border-primary/30 bg-card p-8 text-center md:p-14">
+            <section className="container-page pb-14 md:pb-20">
+                <Reveal className="relative overflow-hidden rounded-2xl border border-primary/30 bg-card px-5 py-8 text-center md:p-12">
                     <div aria-hidden className="pointer-events-none absolute -top-24 left-1/2 h-64 w-[600px] -translate-x-1/2 rounded-full bg-primary/20 blur-[100px]" />
                     <p className="eyebrow relative">{"// let's talk"}</p>
-                    <h2 className="relative mt-4 font-display text-3xl font-bold tracking-tight text-balance md:text-5xl">
-                        Looking for a senior engineer who ships?
+                    <h2 className="relative mt-3 font-display text-2xl font-bold tracking-tight text-balance sm:text-3xl md:text-4xl">
+                        Looking for an experienced engineer to help your team?
                     </h2>
-                    <p className="relative mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">{siteConfig.availability}.</p>
-                    <div className="relative mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+                    <p className="relative mx-auto mt-3 max-w-2xl text-muted-foreground md:text-lg">{siteConfig.availability}.</p>
+                    <div className="relative mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
                         <Button size="lg" asChild>
                             <Link href="/contact">
                                 Get in touch <ArrowRight className="size-4" />

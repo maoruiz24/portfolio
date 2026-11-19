@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AlertTriangle, ArrowLeft, ArrowRight, CheckCircle2, ExternalLink, Scale, Sparkles } from "lucide-react";
@@ -7,7 +8,7 @@ import FlowDiagram from "@/components/FlowDiagram";
 import ProjectCard from "@/components/ProjectCard";
 import Reveal from "@/components/Reveal";
 import { Button } from "@/components/ui/button";
-import { categoryLabels, projects } from "@/lib/data/projects";
+import { categoryLabels, projectLinks, projects } from "@/lib/data/projects";
 import { siteConfig } from "@/lib/site";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -48,7 +49,23 @@ export default async function ProjectDetailPage({ params }: Props) {
     const related = projects
         .filter((p) => p.slug !== project.slug && (p.category === project.category || (project.ai && p.ai)))
         .slice(0, 2);
-    const host = project.url?.replace(/^https?:\/\//, "");
+    const links = projectLinks(project);
+    const overview = project.overview;
+    const glance = overview
+        ? [
+              { label: "What it is", value: overview.product },
+              { label: "My role", value: overview.role },
+              { label: "Problem solved", value: overview.problem },
+              { label: "Outcome", value: overview.outcome },
+          ]
+        : [];
+    const status = overview?.status
+        ? [
+              { label: "Delivered", value: overview.status.delivered, tone: "text-primary border-primary/30 bg-primary/5" },
+              { label: "In progress", value: overview.status.inProgress, tone: "text-signal border-signal/30 bg-signal/5" },
+              { label: "Planned", value: overview.status.planned, tone: "text-muted-foreground border-border bg-muted/40" },
+          ].filter((x) => x.value)
+        : [];
     const pageUrl = siteConfig.url + "/projects/" + project.slug;
     const structuredData = [
         {
@@ -72,22 +89,22 @@ export default async function ProjectDetailPage({ params }: Props) {
     ];
 
     return (
-        <article className="pb-24">
+        <article className="pb-16 md:pb-24">
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }}
             />
             <header className="relative overflow-hidden border-b border-border/60">
                 <div aria-hidden className="bg-grid pointer-events-none absolute inset-0 [mask-image:radial-gradient(ellipse_at_top,black_20%,transparent_70%)]" />
-                <div className="container-page relative py-12 md:py-20">
+                <div className="container-page relative py-8 md:py-14">
                     <Link
                         href="/projects"
-                        className="group mb-10 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-primary"
+                        className="group mb-6 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-primary"
                     >
                         <ArrowLeft className="size-4 transition-transform group-hover:-translate-x-1" />
                         All projects
                     </Link>
-                    <div className="mb-5 flex flex-wrap items-center gap-2 font-mono text-xs text-muted-foreground">
+                    <div className="mb-4 flex flex-wrap items-center gap-2 font-mono text-xs text-muted-foreground">
                         <span>{project.org}</span>
                         <span aria-hidden>·</span>
                         <span>{project.period}</span>
@@ -99,28 +116,56 @@ export default async function ProjectDetailPage({ params }: Props) {
                         )}
                         {project.status && <span className="rounded-full bg-signal/15 px-2 py-0.5 text-signal">{project.status}</span>}
                     </div>
-                    <h1 className="max-w-4xl font-display text-4xl font-bold leading-tight tracking-tight text-balance md:text-6xl">
+                    <h1 className="max-w-4xl font-display text-[2rem] font-bold leading-tight tracking-tight text-balance sm:text-4xl md:text-5xl">
                         {project.title}
                     </h1>
-                    <p className="mt-6 max-w-3xl text-lg text-muted-foreground text-pretty md:text-xl">{project.summary}</p>
+                    <p className="mt-4 max-w-3xl text-base text-muted-foreground text-pretty sm:text-lg">
+                        {overview ? project.tagline : project.summary}
+                    </p>
 
-                    {project.url && (
-                        <div className="mt-8 flex flex-wrap items-center gap-3">
-                            <Button asChild>
-                                <a href={project.url} target="_blank" rel="noreferrer">
-                                    Visit {host} <ExternalLink className="size-4" />
-                                </a>
-                            </Button>
-                            <span className="text-sm text-muted-foreground">Personal R&amp;D project</span>
+                    {links.length > 0 && (
+                        <div className="mt-5 flex flex-wrap items-center gap-2 sm:gap-3">
+                            {links.map((l, i) => (
+                                <Button key={l.href} variant={i === 0 ? "default" : "outline"} asChild>
+                                    <a href={l.href} target="_blank" rel="noreferrer">
+                                        {l.label} <ExternalLink className="size-4" />
+                                    </a>
+                                </Button>
+                            ))}
+                            <span className="text-sm text-muted-foreground">
+                                {project.category === "enterprise" ? "Public store listings" : "Personal R&D project"}
+                            </span>
                         </div>
                     )}
 
+                    {glance.length > 0 && (
+                        <dl className="mt-6 grid gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-2">
+                            {glance.map((g) => (
+                                <div key={g.label} className="bg-card p-4 md:p-5">
+                                    <dt className="eyebrow">{g.label}</dt>
+                                    <dd className="mt-1.5 text-sm leading-relaxed text-foreground/90 md:text-base">{g.value}</dd>
+                                </div>
+                            ))}
+                        </dl>
+                    )}
+
+                    {status.length > 0 && (
+                        <ul className="mt-3 grid gap-2 text-sm md:grid-cols-3" aria-label="Project status">
+                            {status.map((st) => (
+                                <li key={st.label} className={"rounded-lg border p-3 " + st.tone}>
+                                    <span className="font-mono text-[11px] uppercase tracking-wider">{st.label}</span>
+                                    <span className="mt-1 block text-foreground/85">{st.value}</span>
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+
                     {project.metrics.length > 0 && (
-                        <dl className="mt-10 grid grid-cols-2 gap-6 border-t border-border pt-8 md:grid-cols-4">
+                        <dl className="mt-6 grid grid-cols-2 gap-4 border-t border-border pt-6 md:grid-cols-4 md:gap-6">
                             {project.metrics.map((m) => (
                                 <div key={m.label}>
                                     <dt className="sr-only">{m.label}</dt>
-                                    <dd className="font-display text-2xl font-bold text-primary md:text-3xl">{m.value}</dd>
+                                    <dd className="font-display text-xl font-bold text-primary sm:text-2xl md:text-3xl">{m.value}</dd>
                                     <dd className="mt-1 text-sm text-muted-foreground">{m.label}</dd>
                                 </div>
                             ))}
@@ -129,8 +174,8 @@ export default async function ProjectDetailPage({ params }: Props) {
                 </div>
             </header>
 
-            <div className="container-page grid grid-cols-1 gap-12 pt-16 lg:grid-cols-[1fr_280px]">
-                <div className="min-w-0 space-y-14">
+            <div className="container-page grid grid-cols-1 gap-10 pt-10 md:pt-14 lg:grid-cols-[1fr_280px]">
+                <div className="min-w-0 space-y-10 md:space-y-14">
                     {project.features && (
                         <Section label="key capabilities">
                             <ul className="grid gap-3 sm:grid-cols-2">
@@ -144,8 +189,28 @@ export default async function ProjectDetailPage({ params }: Props) {
                         </Section>
                     )}
 
+                    {project.gallery && project.gallery.length > 0 && (
+                        <Section label="screenshots">
+                            <div className="grid gap-4 sm:grid-cols-2">
+                                {project.gallery.map((img) => (
+                                    <figure key={img.src} className="overflow-hidden rounded-xl border border-border bg-card">
+                                        <Image
+                                            src={img.src}
+                                            alt={img.alt}
+                                            width={img.width}
+                                            height={img.height}
+                                            sizes="(min-width: 1024px) 420px, (min-width: 640px) 50vw, 100vw"
+                                            className="h-auto w-full"
+                                        />
+                                        {img.caption && <figcaption className="border-t border-border p-3 text-sm text-muted-foreground">{img.caption}</figcaption>}
+                                    </figure>
+                                ))}
+                            </div>
+                        </Section>
+                    )}
+
                     <Section label="the problem">
-                        <p className="text-lg leading-relaxed text-foreground/90">{project.problem}</p>
+                        <p className="text-base leading-relaxed text-foreground/90 sm:text-lg">{project.problem}</p>
                     </Section>
 
                     {project.responsibilities && (
@@ -227,9 +292,9 @@ export default async function ProjectDetailPage({ params }: Props) {
                         </ul>
                     </Section>
 
-                    <Reveal as="section" className="rounded-xl border border-primary/30 bg-primary/5 p-6">
+                    <Reveal as="section" className="rounded-xl border border-primary/30 bg-primary/5 p-5 md:p-6">
                         <h2 className="eyebrow mb-3">{"// lessons learned"}</h2>
-                        <p className="text-lg leading-relaxed">{project.learning}</p>
+                        <p className="text-base leading-relaxed sm:text-lg">{project.learning}</p>
                     </Reveal>
                 </div>
 
@@ -244,20 +309,21 @@ export default async function ProjectDetailPage({ params }: Props) {
                             ))}
                         </ul>
                     </div>
-                    {project.url && (
+                    {links.map((l) => (
                         <a
-                            href={project.url}
+                            key={l.href}
+                            href={l.href}
                             target="_blank"
                             rel="noreferrer"
                             className="flex items-center justify-between gap-3 rounded-xl border border-border bg-card p-5 text-sm transition-colors hover:border-primary/50"
                         >
-                            <span>
-                                <span className="block text-xs uppercase tracking-wider text-muted-foreground">Live site</span>
-                                <span className="font-medium">{host}</span>
+                            <span className="min-w-0">
+                                <span className="block text-xs uppercase tracking-wider text-muted-foreground">Public evidence</span>
+                                <span className="font-medium">{l.label}</span>
                             </span>
-                            <ExternalLink className="size-4 text-primary" />
+                            <ExternalLink className="size-4 shrink-0 text-primary" />
                         </a>
-                    )}
+                    ))}
                     <div className="rounded-xl border border-border bg-card p-6">
                         <p className="font-medium">Want the details?</p>
                         <p className="mt-2 text-sm text-muted-foreground">
@@ -271,7 +337,7 @@ export default async function ProjectDetailPage({ params }: Props) {
             </div>
 
             {related.length > 0 && (
-                <section className="container-page mt-24">
+                <section className="container-page mt-16 md:mt-24">
                     <div className="mb-8 flex flex-col justify-between gap-3 sm:flex-row sm:items-end">
                         <h2 className="font-display text-2xl font-bold md:text-3xl">Related work</h2>
                         <Link href={"/projects/" + next.slug} className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">

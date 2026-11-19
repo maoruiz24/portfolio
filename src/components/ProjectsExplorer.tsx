@@ -25,7 +25,7 @@ export default function ProjectsExplorer() {
     }, [active]);
 
     return (
-        <div className="space-y-8">
+        <div className="space-y-6">
             <div role="group" aria-label="Filter projects" className="flex flex-wrap gap-2">
                 {filters.map((f) => {
                     const count = projects.filter(f.match).length;
@@ -37,7 +37,7 @@ export default function ProjectsExplorer() {
                             aria-pressed={selected}
                             onClick={() => setActive(f.id)}
                             className={cn(
-                                "rounded-full border px-4 py-1.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                                "min-h-9 rounded-full border px-3.5 py-1.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
                                 selected
                                     ? "border-primary bg-primary text-primary-foreground"
                                     : "border-border text-muted-foreground hover:border-primary/50 hover:text-foreground"
@@ -50,8 +50,8 @@ export default function ProjectsExplorer() {
                 })}
             </div>
 
-            <motion.ul layout className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-                <AnimatePresence mode="popLayout">
+            <motion.ul layout className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-5 lg:grid-cols-3">
+                <AnimatePresence mode="popLayout" initial={false}>
                     {visible.map((project) => (
                         <motion.li
                             key={project.slug}

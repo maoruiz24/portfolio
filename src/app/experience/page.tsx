@@ -10,19 +10,19 @@ import { siteConfig } from "@/lib/site";
 export const metadata: Metadata = {
     title: "Experience",
     description:
-        "15+ years of professional experience: Senior Software Developer at Nology Solutions, Senior Software Engineer at ETB and Technical Leader at Indra.",
+        "15+ years designing, building and maintaining production software: Senior Software Developer at Nology Solutions, Senior Software Engineer at ETB and Technical Leader at Indra.",
     alternates: { canonical: "/experience" },
 };
 
 export default function ExperiencePage() {
     return (
-        <div className="container-page py-16 md:py-24">
-            <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+        <div className="container-page py-10 md:py-16">
+            <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
                 <SectionHeading
                     as="h1"
                     eyebrow="experience"
-                    title="15+ years of shipping"
-                    subtitle="From leading a delivery team for Telefónica to owning a logistics SaaS end to end — and bringing AI agents into how it gets built."
+                    title="15+ years in production software"
+                    subtitle="From leading a delivery team for Telefónica to building platforms for a national telecom and owning a B2B2C SaaS in production — web, mobile, API and database."
                     className="mb-0"
                 />
                 <Button variant="outline" asChild className="self-start md:self-auto">
@@ -32,11 +32,11 @@ export default function ExperiencePage() {
                 </Button>
             </div>
 
-            <div className="mt-16">
+            <div className="mt-8 md:mt-12">
                 <Timeline items={experiences} />
             </div>
 
-            <div className="mt-24 grid grid-cols-1 gap-6 md:grid-cols-2">
+            <div className="mt-14 grid grid-cols-1 gap-4 md:mt-20 md:grid-cols-2 md:gap-6">
                 <Reveal className="rounded-xl border border-border bg-card p-6">
                     <h2 className="flex items-center gap-2 font-display text-xl font-bold">
                         <GraduationCap className="size-5 text-primary" /> Education &amp; certifications

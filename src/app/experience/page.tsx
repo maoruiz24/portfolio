@@ -10,7 +10,7 @@ import { siteConfig } from "@/lib/site";
 export const metadata: Metadata = {
     title: "Experience",
     description:
-        "17 years of professional experience: Senior Software Developer at Nology Solutions, Senior Software Engineer at ETB and Technical Leader at Indra.",
+        "15+ years of professional experience: Senior Software Developer at Nology Solutions, Senior Software Engineer at ETB and Technical Leader at Indra.",
     alternates: { canonical: "/experience" },
 };
 
@@ -21,7 +21,7 @@ export default function ExperiencePage() {
                 <SectionHeading
                     as="h1"
                     eyebrow="experience"
-                    title="17 years of shipping"
+                    title="15+ years of shipping"
                     subtitle="From leading a delivery team for Telefónica to owning a logistics SaaS end to end — and bringing AI agents into how it gets built."
                     className="mb-0"
                 />
@@ -39,7 +39,7 @@ export default function ExperiencePage() {
             <div className="mt-24 grid grid-cols-1 gap-6 md:grid-cols-2">
                 <Reveal className="rounded-xl border border-border bg-card p-6">
                     <h2 className="flex items-center gap-2 font-display text-xl font-bold">
-                        <GraduationCap className="size-5 text-primary" /> Education
+                        <GraduationCap className="size-5 text-primary" /> Education &amp; certifications
                     </h2>
                     <ul className="mt-5 space-y-4">
                         {siteConfig.education.map((e) => (
@@ -47,6 +47,14 @@ export default function ExperiencePage() {
                                 <p className="font-medium">{e.degree}</p>
                                 <p className="text-sm text-muted-foreground">
                                     {e.school} · {e.location} · {e.year}
+                                </p>
+                            </li>
+                        ))}
+                        {siteConfig.certifications.map((c) => (
+                            <li key={c.name}>
+                                <p className="font-medium">{c.name}</p>
+                                <p className="text-sm text-muted-foreground">
+                                    {c.issuer} · {c.year}
                                 </p>
                             </li>
                         ))}

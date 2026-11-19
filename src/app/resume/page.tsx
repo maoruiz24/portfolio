@@ -174,11 +174,16 @@ export default function ResumePage() {
                     <p className="mt-1.5 text-zinc-600">Case studies: {site}/projects</p>
                 </ResumeSection>
 
-                <ResumeSection title="Education">
+                <ResumeSection title="Education & Certifications">
                     <ul className="space-y-0.5">
                         {siteConfig.education.map((e) => (
                             <li key={e.degree}>
                                 <span className="font-semibold text-zinc-900">{e.degree}</span> — {e.school}, {e.location} ({e.year})
+                            </li>
+                        ))}
+                        {siteConfig.certifications.map((c) => (
+                            <li key={c.name}>
+                                <span className="font-semibold text-zinc-900">{c.name}</span> — {c.issuer} ({c.year})
                             </li>
                         ))}
                     </ul>

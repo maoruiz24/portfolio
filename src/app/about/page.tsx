@@ -9,7 +9,7 @@ import { siteConfig } from "@/lib/site";
 export const metadata: Metadata = {
     title: "About",
     description:
-        "Ivan Ruiz — a senior software engineer from Bogotá based in Mississauga, focused on AI engineering and agentic development on top of 17 years of production experience.",
+        "Ivan Ruiz — a senior software engineer from Bogotá based in Mississauga, focused on AI engineering and agentic development on top of 15+ years of production experience.",
     alternates: { canonical: "/about" },
 };
 
@@ -58,7 +58,7 @@ export default function AboutPage() {
                     />
                     <Reveal className="max-w-3xl space-y-5 text-lg leading-relaxed text-muted-foreground">
                         <p>
-                            I&apos;ve spent 17 years shipping software for telecom, logistics and enterprise clients: leading teams, designing
+                            I&apos;ve spent 15+ years shipping software for telecom, logistics and enterprise clients: leading teams, designing
                             platforms and, most recently, owning a production SaaS end to end — from SQL Server stored procedures to a React
                             Native app in both app stores.
                         </p>

@@ -10,9 +10,9 @@ export const siteConfig = {
   tagline: "Web, Mobile, Cloud & AI-Assisted Delivery",
   specialties: ["React & React Native", ".NET & Node.js", "SQL", "CI/CD & Cloud", "AI-Assisted Engineering"],
   intro:
-    "I design, build and ship production software end to end — polished web and mobile interfaces, scalable backends and automated delivery pipelines. 17 years across logistics, telecom and enterprise SaaS, now amplified by AI agents like Claude Code and Codex.",
+    "I design, build and ship production software end to end — polished web and mobile interfaces, scalable backends and automated delivery pipelines. 15+ years across logistics, telecom and enterprise SaaS, now amplified by AI agents like Claude Code and Codex.",
   summary:
-    "Senior full-stack engineer with 17 years of experience designing, building and shipping production software for logistics, telecom and enterprise clients — from React and React Native front ends to .NET, Node.js and SQL Server back ends and automated CI/CD pipelines. I modernize multi-tenant SaaS platforms, build cross-platform mobile apps and bring AI into engineering practice with Claude Code and Codex (subagents, skills, MCP), plus LLM features built with guardrails.",
+    "Senior full-stack engineer with 15+ years of experience designing, building and shipping production software for logistics, telecom and enterprise clients — from React and React Native front ends to .NET, Node.js and SQL Server back ends and automated CI/CD pipelines. I modernize multi-tenant SaaS platforms, build cross-platform mobile apps and bring AI into engineering practice with Claude Code and Codex (subagents, skills, MCP), plus LLM features built with guardrails.",
   email: "maoruiz24@gmail.com",
   phone: "(647) 574-5058",
   location: "Mississauga, ON, Canada",
@@ -43,19 +43,20 @@ export const siteConfig = {
       year: "2013",
     },
   ],
+  certifications: [{ name: "Microsoft Certified: Azure Fundamentals", issuer: "Microsoft", year: "2021" }],
   /**
    * Home "proof strip". Each figure describes ONE thing — never merge the SaaS customer
    * count with the mobile app's users.
    */
   stats: [
-    { value: "17 yrs", label: "Building production software" },
+    { value: "15+ yrs", label: "Building production software" },
     { value: "~200", label: "Business customers on the logistics SaaS I maintain" },
     { value: "500–1,000", label: "Recurring users of the driver app I built" },
     { value: "2–3 s", label: "Critical page loads, down from 12–18 s" },
   ],
   seo: {
     description:
-      "Ivan Ruiz — Senior Full-Stack Engineer in Mississauga, ON. 17 years building and shipping production software end to end: React and React Native front ends, .NET, Node.js and SQL Server back ends, CI/CD pipelines and AI-assisted engineering with Claude Code and Codex.",
+      "Ivan Ruiz — Senior Full-Stack Engineer in Mississauga, ON. 15+ years building and shipping production software end to end: React and React Native front ends, .NET, Node.js and SQL Server back ends, CI/CD pipelines and AI-assisted engineering with Claude Code and Codex.",
     keywords: [
       "Senior Full-Stack Engineer",
       "Senior Software Engineer",

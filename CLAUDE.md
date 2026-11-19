@@ -66,7 +66,7 @@ public/
 tmp/                      # Notas locales (brief de Nology). En .gitignore — nunca commitear.
 ```
 
-**Todo el contenido es data estática en `src/lib/`.** No hay CMS, base de datos, API routes ni variables de entorno. Sitio y résumé leen de los mismos datos: si cambias `experience.ts` o `site.ts`, regenera el PDF.
+**Todo el contenido es data estática en `src/lib/`.** No hay CMS ni base de datos. La única lógica de servidor es la Server Action del formulario de contacto ([src/app/contact/actions.ts](src/app/contact/actions.ts)), que envía correo con Resend; necesita `RESEND_API_KEY` (y opcionalmente `CONTACT_FROM_EMAIL`, `CONTACT_TO_EMAIL`) — ver [docs/contact-email.md](docs/contact-email.md) y `.env.example`. Sitio y résumé leen de los mismos datos: si cambias `experience.ts` o `site.ts`, regenera el PDF.
 
 ## Reglas de contenido (importantes)
 
@@ -104,5 +104,5 @@ tmp/                      # Notas locales (brief de Nology). En .gitignore — n
 ## Pendientes conocidos
 
 - No hay imágenes/capturas de proyectos; las tarjetas son tipográficas (métricas + stack).
-- El formulario de contacto no tiene backend: arma un `mailto:` hacia `siteConfig.email`.
+- El formulario de contacto envía con Resend vía Server Action (honeypot, tiempo mínimo y rate limit en memoria por réplica). Sin `RESEND_API_KEY` muestra un error con el email directo.
 - No hay tests automatizados; la verificación es typecheck + lint + build + revisión visual (capturas con Chrome headless; ojo: headless tiene ancho mínimo ~500px, para móvil real usar un iframe de 390px).

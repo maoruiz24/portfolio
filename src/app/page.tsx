@@ -66,7 +66,7 @@ export default function Home() {
                 <SectionHeading
                     eyebrow="what I bring"
                     title="End-to-end ownership, from pixels to pipelines."
-                    subtitle="I work across the whole stack — interface, API, database and delivery — with 17 years of production experience and practical AI-assisted development."
+                    subtitle="I work across the whole stack — interface, API, database and delivery — with 15+ years of production experience and practical AI-assisted development."
                 />
                 <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
                     {pillars.map((p, i) => (
@@ -147,7 +147,7 @@ export default function Home() {
             <section className="border-y border-border/60 bg-card/30 py-24">
                 <div className="container-page">
                     <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
-                        <SectionHeading eyebrow="experience" title="17 years, three companies, one constant: shipping." className="mb-0" />
+                        <SectionHeading eyebrow="experience" title="15+ years, three companies, one constant: shipping." className="mb-0" />
                         <Button variant="outline" asChild className="self-start md:self-auto">
                             <Link href="/experience">
                                 Full experience <ArrowRight className="size-4" />
